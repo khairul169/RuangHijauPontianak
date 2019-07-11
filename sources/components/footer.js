@@ -1,25 +1,33 @@
 import React, { Component } from 'react'
-import { Text, StyleSheet, View } from 'react-native'
+import { StyleSheet, View, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 const TabItem = (props) => {
 	return (
-		<View style={styles.tabItem}>
+		<TouchableOpacity style={styles.tabItem} onPress={props.onPress}>
 			<Icon style={[styles.tabIcon, props.active ? styles.tabIconActive : null]}
 				name={props.icon ? props.icon : 'heart'} />
-		</View>
+		</TouchableOpacity>
 	)
 }
 
 export default class Footer extends Component {
+	navigateTo = (routeName) => {
+		this.props.navigation.navigate(routeName);
+	}
+
 	render() {
+		const navigationState = this.props.navigation.state;
+		const { tabIcons } = this.props;
+
 		return (
 			<View style={styles.container}>
-				<TabItem icon='home' active />
-				<TabItem icon='google-hangouts' />
-				<TabItem icon='image-filter-center-focus' />
-				<TabItem icon='leaf' />
-				<TabItem icon='account-circle' />
+				{ navigationState.routes.map((item, index) => (
+					<TabItem key={index}
+						icon={tabIcons && index < tabIcons.length ? tabIcons[index] : 'home'}
+						active={navigationState.index === index}
+						onPress={() => this.navigateTo(item.routeName)} />
+				)) }
 			</View>
 		)
 	}

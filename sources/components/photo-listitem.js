@@ -15,9 +15,9 @@ export default class PhotoListItem extends Component {
 	render() {
 		return (
 			<View style={styles.container}>
-				<View style={{height: 200, flex: 1, overflow: 'hidden'}}>
+				<View style={{height: 200, flex: 1, overflow: 'hidden', margin: 10, marginBottom: 0}}>
 					<Image source={require('../../assets/tanam_pohon.jpg')}
-						style={{width: '100%', height: '100%'}} />
+						style={{width: '100%', height: '100%', resizeMode: 'cover', borderRadius: 5}} />
 				</View>
 
 				<View style={styles.posterContainer}>
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
 		backgroundColor: '#fff', marginBottom: 16, elevation: 2
 	},
 	posterContainer: {
-		flexDirection: 'row', alignItems: 'center', paddingLeft: 20, paddingVertical: 10
+		flexDirection: 'row', alignItems: 'center', paddingLeft: 10, paddingVertical: 10
 	},
 	posterPhoto: {
 		width: 36, height: 36, borderRadius: 36/2, backgroundColor: '#333'

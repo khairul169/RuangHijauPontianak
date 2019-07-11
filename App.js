@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
-import { Text, View } from 'react-native'
-import Home from './sources/home'
+import AppRoutes from './sources/routes'
 
 export default class App extends Component {
 	render() {
 		return (
-			<Home />
+			<AppRoutes />
 		)
 	}
 }

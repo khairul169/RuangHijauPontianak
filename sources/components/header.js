@@ -7,7 +7,9 @@ export default class Header extends Component {
 			<View style={styles.header}>
 				<StatusBar backgroundColor='#7CB342' barStyle='light-content' />
 				
-				<View style={styles.side}>
+				<View style={[styles.side, !this.props.leftComponent ? {
+					minWidth: 0, paddingHorizontal: 0, width: 24
+				} : null]}>
 					{this.props.leftComponent}
 				</View>
 

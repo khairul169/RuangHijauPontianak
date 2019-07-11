@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Text, StyleSheet, View, ScrollView } from 'react-native'
-import { Header, PhotoListItem, Footer } from './components'
+import { Header, PhotoListItem } from './components'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 
@@ -14,7 +14,7 @@ export default class Home extends Component {
 					}
 					title="Ruang Hijau Pontianak"
 					rightComponent={
-						<Icon name='notifications' style={{color: '#686868'}} size={20} />
+						<Icon name='notifications' style={{color: '#686868'}} size={18} />
 					} />
 
 				<ScrollView style={styles.content}>
@@ -22,8 +22,6 @@ export default class Home extends Component {
 					<PhotoListItem />
 					<PhotoListItem />
 				</ScrollView>
-
-				<Footer />
 			</View>
 		)
 	}
@@ -31,7 +29,7 @@ export default class Home extends Component {
 
 const styles = StyleSheet.create({
 	container: {
-		flex: 1, backgroundColor: '#fff'
+		flex: 1
 	},
 	content: {
 		flex: 1, backgroundColor: '#f2f2f2', zIndex: -1
