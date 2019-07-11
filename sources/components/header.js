@@ -5,7 +5,7 @@ export default class Header extends Component {
 	render() {
 		return (
 			<View style={styles.header}>
-				<StatusBar backgroundColor='#66BB6A' barStyle='light-content' />
+				<StatusBar backgroundColor='#7CB342' barStyle='light-content' />
 				
 				<View style={styles.side}>
 					{this.props.leftComponent}
@@ -26,15 +26,15 @@ export default class Header extends Component {
 const styles = StyleSheet.create({
 	header: {
 		flexDirection: 'row', alignItems: 'center', height: 55,
-		backgroundColor: '#66BB6A'
+		backgroundColor: '#fff', elevation: 3 //8BC34A
 	},
 	side: {
-		paddingHorizontal: 16, minWidth: 60
+		paddingHorizontal: 16, minWidth: 60, alignItems: 'center'
 	},
 	center: {
-		flex: 1, alignItems: 'center'
+		flex: 1
 	},
 	title: {
-		fontSize: 18, color: '#fff', fontWeight: 'bold'
+		fontSize: 18, color: '#689F38'
 	}
 })
