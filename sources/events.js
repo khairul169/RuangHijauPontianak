@@ -7,7 +7,7 @@ export default class Events extends Component {
 	render() {
 		return (
 			<View style={styles.container}>
-				<Header title="Events" centerTitle
+				<Header title="Kegiatan" centerTitle
 					leftComponent={
 						<MaterialIcons name='event-note' style={{color: '#689F38'}} size={20} />
 					} />

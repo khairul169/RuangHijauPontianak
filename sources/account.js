@@ -7,7 +7,7 @@ export default class Account extends Component {
 	render() {
 		return (
 			<View style={styles.container}>
-				<Header title="Account" centerTitle
+				<Header title="Akun" centerTitle
 					leftComponent={
 						<MaterialCommunityIcons name='account-tie' style={{color: '#689F38'}} size={20} />
 					} />

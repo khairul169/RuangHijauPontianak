@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Text, StyleSheet, View } from 'react-native'
-import { Header } from './components'
+import { Header } from '../components'
 
 export default class UploadPhoto extends Component {
 	render() {

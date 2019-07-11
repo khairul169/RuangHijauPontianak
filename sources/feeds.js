@@ -8,7 +8,7 @@ export default class Feeds extends Component {
 	render() {
 		return (
 			<View style={styles.container}>
-				<Header title="Postingan" centerTitle
+				<Header title="Hijau Kota Kita" centerTitle
 					leftComponent={
 						<FontAwesome name='comments' style={{color: '#689F38'}} size={20} />
 					}

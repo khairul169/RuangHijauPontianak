@@ -14,7 +14,7 @@ import Feeds from './feeds'
 import Account from './account'
 
 // Screens stacks
-import UploadPhoto from './upload-photo.js'
+import UploadPhoto from './feeds/upload-photo'
 
 const indexTabIcons = [
 	'home',

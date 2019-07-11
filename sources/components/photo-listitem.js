@@ -15,9 +15,9 @@ export default class PhotoListItem extends Component {
 	render() {
 		return (
 			<View style={styles.container}>
-				<TouchableHighlight underlayColor={null} style={styles.postImage} onPress={this.props.onImagePress}>
+				<TouchableHighlight underlayColor={null} style={styles.postImageButton} onPress={this.props.onImagePress}>
 					<Image source={require('../../assets/tanam_pohon.jpg')}
-						style={{width: '100%', height: '100%', resizeMode: 'cover', borderRadius: 5}} />
+						style={styles.postImage} />
 				</TouchableHighlight>
 
 				<View style={styles.posterContainer}>
@@ -25,10 +25,12 @@ export default class PhotoListItem extends Component {
 
 					<View style={{flex: 1, marginLeft: 16}}>
 						<Text style={styles.posterName}>Khairul Hidayat</Text>
-						<Text style={styles.posterId}>@khairul169</Text>
+						<Text style={styles.posterId}>khairul169</Text>
 					</View>
 
-					<ActionButton />
+					<View style={styles.actionContainer}>
+						<ActionButton />
+					</View>
 				</View>
 			</View>
 		)
@@ -37,7 +39,7 @@ export default class PhotoListItem extends Component {
 
 const styles = StyleSheet.create({
 	container: {
-		backgroundColor: '#fff', marginBottom: 16, elevation: 2
+		backgroundColor: '#fff', marginBottom: 16, borderBottomColor: '#e6e6e6', borderBottomWidth: 1
 	},
 	posterContainer: {
 		flexDirection: 'row', alignItems: 'center', paddingLeft: 10, paddingVertical: 10
@@ -49,13 +51,20 @@ const styles = StyleSheet.create({
 		fontSize: 14, color: '#222'
 	},
 	posterId: {
-		fontSize: 12, color: '#646464', marginTop: 4
+		fontSize: 12, color: '#646464', marginTop: 2
+	},
+	postImageButton: {
+		height: 200, flex: 1, overflow: 'hidden'
 	},
 	postImage: {
-		height: 200, flex: 1, overflow: 'hidden', margin: 10, marginBottom: 0
+		width: '100%', height: '100%', resizeMode: 'cover'
+	},
+	actionContainer: {
+		borderLeftColor: '#efefef', borderLeftWidth: 1, height: '100%',
+		flexDirection: 'row', alignItems: 'stretch'
 	},
 	actionButton: {
 		flexDirection: 'row', alignItems: 'center', justifyContent: 'center',
-		paddingLeft: 16, paddingRight: 24, height: '100%'
+		paddingLeft: 16, paddingRight: 24,
 	}
 })
