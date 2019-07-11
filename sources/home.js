@@ -1,26 +1,47 @@
 import React, { Component } from 'react'
-import { Text, StyleSheet, View, ScrollView } from 'react-native'
+import { Text, StyleSheet, View, ScrollView, StatusBar } from 'react-native'
 import { Header, PhotoListItem } from './components'
-import Icon from 'react-native-vector-icons/MaterialIcons'
-import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+
+const Test = () => {
+	return (
+		<ScrollView horizontal={true} style={{backgroundColor: '#fff', marginVertical: 10}} showsHorizontalScrollIndicator={false}
+			contentContainerStyle={{height: 80, alignItems: 'stretch', padding: 10}}>
+			<View style={{flex: 1, width: 100, backgroundColor: '#ddd', marginRight: 10}}>
+				<Text>Test</Text>
+			</View>
+			<View style={{flex: 1, width: 100, backgroundColor: '#ddd', marginRight: 10}}>
+				<Text>Test</Text>
+			</View>
+			<View style={{flex: 1, width: 100, backgroundColor: '#ddd', marginRight: 10}}>
+				<Text>Test</Text>
+			</View>
+			<View style={{flex: 1, width: 100, backgroundColor: '#ddd', marginRight: 10}}>
+				<Text>Test</Text>
+			</View>
+			<View style={{flex: 1, width: 100, backgroundColor: '#ddd', marginRight: 10}}>
+				<Text>Test</Text>
+			</View>
+		</ScrollView>
+	)
+}
 
 export default class Home extends Component {
 	render() {
 		return (
 			<View style={styles.container}>
-				<Header
+				<Header title="Ruang Hijau Pontianak" centerTitle
 					leftComponent={
-						<MaterialIcon name='leaf' style={{color: '#689F38'}} size={20} />
+						<MaterialCommunityIcons name='leaf' style={{color: '#689F38'}} size={20} />
 					}
-					title="Ruang Hijau Pontianak"
 					rightComponent={
-						<Icon name='notifications' style={{color: '#686868'}} size={18} />
+						<MaterialIcons name='notifications' style={{color: '#686868'}} size={18} />
 					} />
 
 				<ScrollView style={styles.content}>
-					<PhotoListItem />
-					<PhotoListItem />
-					<PhotoListItem />
+					<Test />
+					<Test />
 				</ScrollView>
 			</View>
 		)
@@ -32,6 +53,6 @@ const styles = StyleSheet.create({
 		flex: 1
 	},
 	content: {
-		flex: 1, backgroundColor: '#f2f2f2', zIndex: -1
+		flex: 1, backgroundColor: '#fff', zIndex: -1
 	}
 })

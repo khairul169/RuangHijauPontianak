@@ -7,26 +7,26 @@ import Footer from './components/footer'
 // Disable ViewPagerAndroid deprecated warning
 YellowBox.ignoreWarnings(['ViewPagerAndroid']);
 
-// Screens
+// Main screens
 import Home from './home'
 import Events from './events'
-import Post from './post'
-import Stats from './stats'
+import Feeds from './feeds'
 import Account from './account'
+
+// Screens stacks
+import UploadPhoto from './upload-photo.js'
 
 const indexTabIcons = [
 	'home',
-	'google-hangouts',
-	'image-filter-center-focus',
 	'leaf',
+	'google-hangouts',
 	'account-circle'
 ]
 
 const indexTabNavigator = createMaterialTopTabNavigator({
 	Home,
+	Feeds,
 	Events,
-	Post,
-	Stats,
 	Account
 }, {
 	tabBarPosition: 'bottom',
@@ -34,10 +34,11 @@ const indexTabNavigator = createMaterialTopTabNavigator({
 })
 
 const stackContainer = createStackNavigator({
-	index: indexTabNavigator
+	index: indexTabNavigator,
+	UploadPhoto
 }, {
 	headerMode: 'none',
 	transitionConfig: slideTransition
-});
+})
 
 export default createAppContainer(stackContainer);
