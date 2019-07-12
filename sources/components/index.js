@@ -2,6 +2,7 @@ import Header from './header'
 import PhotoListItem, { PosterLayout } from './photo-listitem'
 import Footer from './footer'
 import { HeaderButton, HeaderItem } from './header-buttons'
+import EventCard from './event-card'
 
 export {
 	Header,
@@ -9,5 +10,6 @@ export {
 	PosterLayout,
 	Footer,
 	HeaderButton,
-	HeaderItem
+	HeaderItem,
+	EventCard
 }
