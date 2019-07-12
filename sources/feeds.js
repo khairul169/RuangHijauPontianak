@@ -13,7 +13,7 @@ export default class Feeds extends Component {
 	render() {
 		return (
 			<View style={styles.container}>
-				<Header title="Hijau Kota Kita" centerTitle
+				<Header title="Hijau Kote Kite" centerTitle
 					leftComponent={
 						<HeaderButton onPress={() => this._feedList.scrollToOffset({offset: 0})} component={
 								<FontAwesome name='comments' style={{color: '#689F38'}} size={20} />

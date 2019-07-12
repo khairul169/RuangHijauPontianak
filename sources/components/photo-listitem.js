@@ -5,9 +5,24 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 const ActionButton = (props) => {
 	return (
 		<TouchableOpacity onPress={this.onPress} style={styles.actionButton}>
-			<Icon name='heart' size={18} style={{color: '#585858', marginRight: 6}} />
+			<Icon name='heart' size={18} style={{color: '#828282', marginRight: 6}} />
 			<Text style={{fontSize: 14, color: '#646464'}}>152</Text>
 		</TouchableOpacity>
+	)
+}
+
+export const PosterLayout = (props) => {
+	const photoSize = props.photoSize ? props.photoSize : 32;
+
+	return (
+		<View style={styles.posterContainer}>
+			<View style={[styles.posterPhoto, {width: photoSize, height: photoSize, borderRadius: photoSize/2}]} />
+
+			<View style={{flex: 1, marginLeft: 16}}>
+				<Text style={styles.posterName}>Khairul Hidayat</Text>
+				<Text style={styles.posterId}>khairul169</Text>
+			</View>
+		</View>
 	)
 }
 
@@ -20,13 +35,8 @@ export default class PhotoListItem extends Component {
 						style={styles.postImage} />
 				</TouchableHighlight>
 
-				<View style={styles.posterContainer}>
-					<View style={styles.posterPhoto} />
-
-					<View style={{flex: 1, marginLeft: 16}}>
-						<Text style={styles.posterName}>Khairul Hidayat</Text>
-						<Text style={styles.posterId}>khairul169</Text>
-					</View>
+				<View style={styles.bottomContainer}>
+					<PosterLayout />
 
 					<View style={styles.actionContainer}>
 						<ActionButton />
@@ -39,19 +49,22 @@ export default class PhotoListItem extends Component {
 
 const styles = StyleSheet.create({
 	container: {
-		backgroundColor: '#fff', marginBottom: 16, borderBottomColor: '#e6e6e6', borderBottomWidth: 1
+		backgroundColor: '#fff', marginBottom: 16, elevation: 2
 	},
-	posterContainer: {
+	bottomContainer: {
 		flexDirection: 'row', alignItems: 'center', paddingLeft: 10, paddingVertical: 10
 	},
+	posterContainer: {
+		flexDirection: 'row', alignItems: 'center', flex: 1
+	},
 	posterPhoto: {
-		width: 36, height: 36, borderRadius: 36/2, backgroundColor: '#333'
+		backgroundColor: '#626262', overflow: 'hidden'
 	},
 	posterName: {
-		fontSize: 14, color: '#222'
+		fontSize: 14, color: '#689F38'
 	},
 	posterId: {
-		fontSize: 12, color: '#646464', marginTop: 2
+		fontSize: 12, color: '#546E7A', marginTop: 2
 	},
 	postImageButton: {
 		height: 200, flex: 1, overflow: 'hidden'
@@ -60,8 +73,8 @@ const styles = StyleSheet.create({
 		width: '100%', height: '100%', resizeMode: 'cover'
 	},
 	actionContainer: {
-		borderLeftColor: '#efefef', borderLeftWidth: 1, height: '100%',
-		flexDirection: 'row', alignItems: 'stretch'
+		flexDirection: 'row', alignItems: 'stretch',
+		borderLeftColor: '#B0BEC5', borderLeftWidth: 1, height: '100%'
 	},
 	actionButton: {
 		flexDirection: 'row', alignItems: 'center', justifyContent: 'center',
