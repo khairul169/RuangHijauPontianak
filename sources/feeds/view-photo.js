@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
-import { Text, StyleSheet, View } from 'react-native'
-import { Header } from '../components'
+import { Text, StyleSheet, View, Dimensions, YellowBox, ScrollView } from 'react-native'
+import Image from 'react-native-scalable-image'
+import { Header, PosterLayout } from '../components'
+
+YellowBox.ignoreWarnings(['componentWillReceiveProps']);
 
 export default class ViewPhoto extends Component {
 	constructor(props) {
@@ -13,7 +16,19 @@ export default class ViewPhoto extends Component {
 		return (
 			<View style={styles.container}>
 				<Header title="Lihat Foto" centerTitle backButton navigation={this.props.navigation} />
-				<Text>ViewPhoto {this.photoIndex}</Text>
+				
+				<ScrollView style={{flex: 1}}>
+					<View style={{padding: 16}}>
+						<PosterLayout />
+					</View>
+
+					<Image source={require('../../assets/tanam_pohon.jpg')}
+						width={Dimensions.get('window').width} />
+					
+					<View style={{padding: 16}}>
+						<Text>sdadasdas</Text>
+					</View>
+				</ScrollView>
 			</View>
 		)
 	}
