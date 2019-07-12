@@ -9,6 +9,12 @@ export default class Feeds extends Component {
 		refreshing: false,
 		data: [1, 2, 3, 4]
 	}
+
+	viewPhoto = (id) => {
+		this.props.navigation.navigate('ViewPhoto', {
+			index: id
+		});
+	}
 	
 	render() {
 		return (
@@ -28,8 +34,8 @@ export default class Feeds extends Component {
 				<View style={styles.content}>
 					<FlatList ref={ref => this._feedList = ref} style={{flex: 1}} data={this.state.data}
 						keyExtractor={(item, index) => index.toString()}
-						renderItem={({item}) => (
-							<PhotoListItem onImagePress={() => this.props.navigation.navigate('Test')} />
+						renderItem={({index}) => (
+							<PhotoListItem onImagePress={() => this.viewPhoto(index)} />
 						)}
 						refreshing={this.state.refreshing}
 						onRefresh={() => {

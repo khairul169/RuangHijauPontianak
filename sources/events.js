@@ -4,6 +4,12 @@ import { Header, EventCard } from './components'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
 export default class Events extends Component {
+	viewEvent = (id) => {
+		this.props.navigation.navigate('ViewEvent', {
+			index: id
+		});
+	}
+
 	render() {
 		return (
 			<View style={styles.container}>
@@ -14,7 +20,8 @@ export default class Events extends Component {
 				
 				<FlatList data={[1, 2, 3]} keyExtractor={(item, index) => index.toString()}
 					renderItem={({item, index}) => (
-						<EventCard style={{marginTop: index === 0 ? 16 : 0}} />
+						<EventCard style={{marginTop: index === 0 ? 16 : 0}}
+							onPress={() => this.viewEvent(index)} />
 					)} />
 			</View>
 		)

@@ -14,7 +14,9 @@ import Feeds from './feeds'
 import Account from './account'
 
 // Screens stacks
+import ViewPhoto from './feeds/view-photo'
 import UploadPhoto from './feeds/upload-photo'
+import ViewEvent from './events/view-event'
 
 const indexTabIcons = [
 	'home',
@@ -35,7 +37,9 @@ const indexTabNavigator = createMaterialTopTabNavigator({
 
 const stackContainer = createStackNavigator({
 	index: indexTabNavigator,
-	UploadPhoto
+	ViewPhoto,
+	UploadPhoto,
+	ViewEvent
 }, {
 	headerMode: 'none',
 	transitionConfig: slideTransition

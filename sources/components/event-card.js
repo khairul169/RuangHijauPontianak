@@ -1,23 +1,25 @@
 import React, { Component } from 'react'
-import { Text, StyleSheet, View } from 'react-native'
+import { Text, StyleSheet, View, TouchableHighlight } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
 export default class EventCard extends Component {
 	render() {
 		return (
-			<View style={[styles.container, this.props.style]}>
-				<View style={styles.eventDetail}>
-					<MaterialIcons name='event' style={styles.eventIcon} />
+			<TouchableHighlight onPress={this.props.onPress} underlayColor={null}>
+				<View style={[styles.container, this.props.style]}>
+					<View style={styles.eventDetail}>
+						<MaterialIcons name='event' style={styles.eventIcon} />
 
-					<View style={{marginLeft: 12}}>
-						<Text style={{fontSize: 14, color: '#333'}}>Nama Event</Text>
-						<Text style={{fontSize: 12, color: '#626262'}}>Singkawang • 27 Januari 2019</Text>
+						<View style={{marginLeft: 12}}>
+							<Text style={{fontSize: 14, color: '#333'}}>Nama Event</Text>
+							<Text style={{fontSize: 12, color: '#626262'}}>Singkawang • 27 Januari 2019</Text>
+						</View>
+					</View>
+					<View style={styles.imageContainer}>
+						<View style={{backgroundColor: '#eee', flex: 1, height: '100%'}} />
 					</View>
 				</View>
-				<View style={styles.imageContainer}>
-					<View style={{backgroundColor: '#eee', flex: 1, height: '100%'}} />
-				</View>
-			</View>
+			</TouchableHighlight>
 		)
 	}
 }

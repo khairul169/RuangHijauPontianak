@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, StyleSheet, View, ScrollView, FlatList, Dimensions } from 'react-native'
+import { Text, StyleSheet, View, ScrollView, FlatList, Dimensions, TouchableHighlight } from 'react-native'
 import { Header, PosterLayout, EventCard } from './components'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
@@ -30,12 +30,21 @@ const StatsPenghijauan = (props) => {
 	)
 }
 
-const HighlightedFeeds = () => {
+const HighlightedFeeds = (props) => {
 	const cardWidth = Math.max(Dimensions.get('window').width * 0.6, 250);
 	const data = [1, 2, 3];
-	const renderItems = ({item}) => (
+
+	const viewPhoto = (id) => {
+		props.navigation.navigate('ViewPhoto', {
+			index: id
+		});
+	}
+
+	const renderItems = ({item, index}) => (
 		<View style={[styles.uploadsCard, {width: cardWidth}]}>
-			<View style={{flex: 1, backgroundColor: '#eee'}} />
+			<TouchableHighlight onPress={() => viewPhoto(index)} underlayColor={null} style={{flex: 1}}>
+				<View style={{flex: 1, backgroundColor: '#eee'}} />
+			</TouchableHighlight>
 			
 			<View style={{paddingHorizontal: 8, paddingVertical: 4, flexDirection: 'row'}}>
 				<PosterLayout photoSize={28} />
@@ -58,12 +67,18 @@ const HighlightedFeeds = () => {
 }
 
 const UpcomingEvent = (props) => {
+	const viewEvent = () => {
+		props.navigation.navigate('ViewEvent', {
+			index: props.eventId
+		});
+	}
+
 	return (
 		<View>
 			<Text style={styles.headerTitle}>Kegiatan Akan Datang</Text>
 			
 			<View style={styles.eventCard}>
-				<EventCard style={{marginTop: 8}} />
+				<EventCard style={{marginTop: 8}} onPress={viewEvent} />
 			</View>
 		</View>
 	)
@@ -84,9 +99,9 @@ export default class Home extends Component {
 				<ScrollView style={styles.content}>
 					<StatsPenghijauan jumlahPenghijauan={1827} />
 
-					<HighlightedFeeds />
+					<HighlightedFeeds navigation={this.props.navigation} />
 
-					<UpcomingEvent />
+					<UpcomingEvent navigation={this.props.navigation} />
 				</ScrollView>
 			</View>
 		)
