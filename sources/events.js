@@ -1,13 +1,32 @@
 import React, { Component } from 'react'
-import { Text, StyleSheet, View, FlatList } from 'react-native'
+import { StyleSheet, View, FlatList } from 'react-native'
 import { Header, EventCard } from './components'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
 export default class Events extends Component {
+	state = {
+		events: [1, 2, 3, 4],
+		refreshing: false
+	}
+
+	renderEvent = ({item, index}) => (
+		<EventCard style={{marginTop: index === 0 ? 16 : 0}}
+			onPress={() => this.viewEvent(index)} />
+	)
+
 	viewEvent = (id) => {
 		this.props.navigation.navigate('ViewEvent', {
 			index: id
 		});
+	}
+
+	onRefresh = () => {
+		this.setState({
+			refreshing: false
+		});
+	}
+
+	onEndReached = () => {
 	}
 
 	render() {
@@ -18,11 +37,11 @@ export default class Events extends Component {
 						<MaterialIcons name='event-note' style={{color: '#689F38'}} size={20} />
 					} />
 				
-				<FlatList data={[1, 2, 3]} keyExtractor={(item, index) => index.toString()}
-					renderItem={({item, index}) => (
-						<EventCard style={{marginTop: index === 0 ? 16 : 0}}
-							onPress={() => this.viewEvent(index)} />
-					)} />
+				<FlatList data={this.state.events} keyExtractor={(item, index) => index.toString()}
+					renderItem={this.renderEvent}
+					refreshing={this.state.refreshing}
+					onRefresh={this.onRefresh}
+					onEndReached={this.onEndReached} />
 			</View>
 		)
 	}

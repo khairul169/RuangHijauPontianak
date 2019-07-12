@@ -1,15 +1,13 @@
 import React, { Component } from 'react'
-import { Text, StyleSheet, View, ScrollView, Image, TouchableHighlight } from 'react-native'
-import { Header } from './components'
+import { Text, StyleSheet, View, ScrollView } from 'react-native'
+import { Header, TouchableImage } from './components'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 const Test = (props) => {
 	return (
-		<TouchableHighlight style={{width: '50%', height: 150, overflow: 'hidden'}} underlayColor={null}
-			onPress={props.onPress}>
-			<Image source={require('../assets/tanam_pohon.jpg')}
-				style={{width: '100%', height: '100%', resizeMode: 'cover'}} />
-		</TouchableHighlight>
+		<TouchableImage source={require('../assets/tanam_pohon.jpg')}
+			onPress={props.onPress}
+			style={{width: '50%', height: 150}} />
 	)
 }
 

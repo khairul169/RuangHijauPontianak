@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { StyleSheet, View, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
@@ -11,26 +11,24 @@ const TabItem = (props) => {
 	)
 }
 
-export default class Footer extends Component {
-	navigateTo = (routeName) => {
-		this.props.navigation.navigate(routeName);
+const Footer = (props) => {
+	const navigateTo = (routeName) => {
+		props.navigation.navigate(routeName);
 	}
 
-	render() {
-		const navigationState = this.props.navigation.state;
-		const { tabIcons } = this.props;
+	const navigationState = props.navigation.state;
+	const { tabIcons } = props;
 
-		return (
-			<View style={styles.container}>
-				{ navigationState.routes.map((item, index) => (
-					<TabItem key={index}
-						icon={tabIcons && index < tabIcons.length ? tabIcons[index] : 'home'}
-						active={navigationState.index === index}
-						onPress={() => this.navigateTo(item.routeName)} />
-				)) }
-			</View>
-		)
-	}
+	return (
+		<View style={styles.container}>
+			{ navigationState.routes.map((item, index) => (
+				<TabItem key={index}
+					icon={tabIcons && index < tabIcons.length ? tabIcons[index] : 'home'}
+					active={navigationState.index === index}
+					onPress={() => navigateTo(item.routeName)} />
+			)) }
+		</View>
+	)
 }
 
 const styles = StyleSheet.create({
@@ -48,3 +46,5 @@ const styles = StyleSheet.create({
 		color: '#558B2F'
 	}
 })
+
+export default Footer

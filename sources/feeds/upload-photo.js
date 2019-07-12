@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import { Text, StyleSheet, View, ScrollView, TouchableOpacity, TextInput, Dimensions } from 'react-native'
-import Image from 'react-native-scalable-image'
 import ImagePicker from 'react-native-image-picker'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
-import { Header } from '../components'
+import { Header, Image } from '../components'
 
 export default class UploadPhoto extends Component {
 	state = {

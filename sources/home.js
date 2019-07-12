@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { Text, StyleSheet, View, ScrollView, FlatList, Dimensions, TouchableHighlight } from 'react-native'
-import { Header, PosterLayout, EventCard } from './components'
+import { Text, StyleSheet, View, ScrollView, FlatList, Dimensions } from 'react-native'
+import { Header, PosterLayout, EventCard, TouchableImage } from './components'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
@@ -42,12 +42,14 @@ const HighlightedFeeds = (props) => {
 
 	const renderItems = ({item, index}) => (
 		<View style={[styles.uploadsCard, {width: cardWidth}]}>
-			<TouchableHighlight onPress={() => viewPhoto(index)} underlayColor={null} style={{flex: 1}}>
-				<View style={{flex: 1, backgroundColor: '#eee'}} />
-			</TouchableHighlight>
+			<TouchableImage onPress={() => viewPhoto(index)}
+				style={{flex: 1, backgroundColor: '#eee'}}
+				source={require('../assets/tanam_pohon.jpg')} />
 			
 			<View style={{paddingHorizontal: 8, paddingVertical: 4, flexDirection: 'row'}}>
-				<PosterLayout photoSize={28} />
+				<PosterLayout photoSize={28}
+					title='Khairul Hidayat'
+					subtitle='khairul169' />
 			</View>
 		</View>
 	)

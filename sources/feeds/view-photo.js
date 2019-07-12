@@ -1,11 +1,8 @@
 import React, { Component } from 'react'
-import { Text, StyleSheet, View, Dimensions, YellowBox, ScrollView, TouchableHighlight,
-	TextInput } from 'react-native'
+import { Text, StyleSheet, View, Dimensions, ScrollView, TouchableHighlight, TextInput } from 'react-native'
 import Image from 'react-native-scalable-image'
 import { Header, PosterLayout, HeaderButton } from '../components'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-
-YellowBox.ignoreWarnings(['componentWillReceiveProps']);
 
 const ActionButton = (props) => {
 	return (
@@ -14,6 +11,7 @@ const ActionButton = (props) => {
 			<View style={[{alignItems: 'center', justifyContent: 'center', flexDirection: 'row'},
 				props.leftBorder ? {borderLeftColor: '#eee', borderLeftWidth: 1} : null]}>
 				<MaterialCommunityIcons name={props.icon} style={{color: '#686868'}} size={18} />
+
 				{ props.label && (
 					<Text style={{fontSize: 14, color: '#424242', marginLeft: 10}}>{props.label}</Text>
 				) }
@@ -45,7 +43,7 @@ export default class ViewPhoto extends Component {
 						width={Dimensions.get('window').width} />
 					
 					<View style={{padding: 16}}>
-						<PosterLayout />
+						<PosterLayout title='Khairul Hidayat' subtitle='Siantan Hulu • 27 Januari 2019 14.32'/>
 						<Text style={styles.postDescription}>Hello world! this is some photo description text to describe photo in some words.</Text>
 					</View>
 
