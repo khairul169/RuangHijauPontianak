@@ -1,19 +1,25 @@
 import React, { Component } from 'react'
-import { Text, StyleSheet, View, ScrollView, Dimensions, Image } from 'react-native'
+import { Text, StyleSheet, View, ScrollView, Image, TouchableHighlight } from 'react-native'
 import { Header } from './components'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 const Test = (props) => {
-	const rectSize = Math.floor(Dimensions.get('window').width / 2);
-
 	return (
-		<View style={{width: rectSize, height: rectSize, overflow: 'hidden'}}>
-			<Image source={require('../assets/tanam_pohon.jpg')} style={{width: '100%', height: '100%'}} />
-		</View>
+		<TouchableHighlight style={{width: '50%', height: 150, overflow: 'hidden'}} underlayColor={null}
+			onPress={props.onPress}>
+			<Image source={require('../assets/tanam_pohon.jpg')}
+				style={{width: '100%', height: '100%', resizeMode: 'cover'}} />
+		</TouchableHighlight>
 	)
 }
 
 export default class Account extends Component {
+	viewPhoto = (id) => {
+		this.props.navigation.navigate('ViewPhoto', {
+			index: id
+		});
+	}
+
 	render() {
 		return (
 			<View style={styles.container}>
@@ -44,10 +50,10 @@ export default class Account extends Component {
 					</View>
 
 					<View style={{elevation: 5, zIndex: 1, backgroundColor: '#fff', flexDirection: 'row', flexWrap: 'wrap'}}>
-						<Test />
-						<Test />
-						<Test />
-						<Test />
+						<Test onPress={() => this.viewPhoto(0)} />
+						<Test onPress={() => this.viewPhoto(1)} />
+						<Test onPress={() => this.viewPhoto(2)} />
+						<Test onPress={() => this.viewPhoto(3)} />
 					</View>
 				</ScrollView>
 			</View>

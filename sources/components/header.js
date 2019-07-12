@@ -25,7 +25,9 @@ export default class Header extends Component {
 				</View>
 
 				<View style={[styles.center, this.props.centerTitle ? {alignItems: 'center'} : null]}>
-					<Text style={styles.title}>{this.props.title}</Text>
+					{ this.props.titleComponent ? this.props.titleComponent : (
+						<Text style={styles.title}>{this.props.title}</Text>
+					) }
 				</View>
 
 				<View style={styles.side}>

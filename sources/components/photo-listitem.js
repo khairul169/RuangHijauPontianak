@@ -5,8 +5,10 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 const ActionButton = (props) => {
 	return (
 		<TouchableOpacity onPress={this.onPress} style={styles.actionButton}>
-			<Icon name='heart' size={18} style={{color: '#828282', marginRight: 6}} />
-			<Text style={{fontSize: 14, color: '#646464'}}>152</Text>
+			<Icon name={props.icon} size={18} style={{color: props.iconColor ? props.iconColor : '#525252'}} />
+			{ props.label && (
+				<Text style={{fontSize: 14, color: '#525252', marginLeft: 6}}>{props.label}</Text>
+			) }
 		</TouchableOpacity>
 	)
 }
@@ -29,7 +31,7 @@ export const PosterLayout = (props) => {
 export default class PhotoListItem extends Component {
 	render() {
 		return (
-			<View style={styles.container}>
+			<View style={[styles.container, this.props.style]}>
 				<TouchableHighlight underlayColor={null} style={styles.postImageButton} onPress={this.props.onImagePress}>
 					<Image source={require('../../assets/tanam_pohon.jpg')}
 						style={styles.postImage} />
@@ -39,7 +41,7 @@ export default class PhotoListItem extends Component {
 					<PosterLayout />
 
 					<View style={styles.actionContainer}>
-						<ActionButton />
+						<ActionButton icon='heart' iconColor='#ef5350' label={289} />
 					</View>
 				</View>
 			</View>
@@ -49,10 +51,10 @@ export default class PhotoListItem extends Component {
 
 const styles = StyleSheet.create({
 	container: {
-		backgroundColor: '#fff', marginBottom: 16, elevation: 2
+		backgroundColor: '#fff', margin: 16, elevation: 2
 	},
 	bottomContainer: {
-		flexDirection: 'row', alignItems: 'center', paddingLeft: 10, paddingVertical: 10
+		flexDirection: 'row', alignItems: 'center', padding: 10
 	},
 	posterContainer: {
 		flexDirection: 'row', alignItems: 'center', flex: 1
@@ -73,11 +75,10 @@ const styles = StyleSheet.create({
 		width: '100%', height: '100%', resizeMode: 'cover'
 	},
 	actionContainer: {
-		flexDirection: 'row', alignItems: 'stretch',
-		borderLeftColor: '#B0BEC5', borderLeftWidth: 1, height: '100%'
+		flexDirection: 'row', alignItems: 'stretch', height: '100%'
 	},
 	actionButton: {
 		flexDirection: 'row', alignItems: 'center', justifyContent: 'center',
-		paddingLeft: 16, paddingRight: 24,
+		paddingHorizontal: 24, borderColor: '#AED581', borderWidth: 1, borderRadius: 3
 	}
 })

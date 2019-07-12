@@ -92,9 +92,9 @@ export default class Home extends Component {
 					leftComponent={
 						<MaterialIcons name='home' style={{color: '#689F38'}} size={20} />
 					}
-					rightComponent={
+					/*rightComponent={
 						<MaterialIcons name='notifications' style={{color: '#686868'}} size={18} />
-					} />
+					}*/ />
 
 				<ScrollView style={styles.content}>
 					<StatsPenghijauan jumlahPenghijauan={1827} />

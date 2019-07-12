@@ -35,7 +35,8 @@ export default class Feeds extends Component {
 					<FlatList ref={ref => this._feedList = ref} style={{flex: 1}} data={this.state.data}
 						keyExtractor={(item, index) => index.toString()}
 						renderItem={({index}) => (
-							<PhotoListItem onImagePress={() => this.viewPhoto(index)} />
+							<PhotoListItem onImagePress={() => this.viewPhoto(index)}
+								style={index > 0 ? {marginTop: 0} : null} />
 						)}
 						refreshing={this.state.refreshing}
 						onRefresh={() => {
