@@ -1,4 +1,7 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { fetchHome } from './actions/home'
+
 import { Text, StyleSheet, View, ScrollView, FlatList, Dimensions } from 'react-native'
 import { Header, PosterLayout, EventCard, TouchableImage } from './components'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -12,7 +15,7 @@ const StatsPenghijauan = (props) => {
 			<View style={{flex: 1}}>
 				<View style={{flexDirection: 'row', alignItems: 'flex-start'}}>
 					<Text style={{color: '#fff', fontSize: 36, textAlign: 'center', minWidth: 100}}>
-						{props.jumlahPenghijauan}
+						{props.penghijauan}
 					</Text>
 
 					<View style={{flex: 1, marginLeft: 16}}>
@@ -32,7 +35,6 @@ const StatsPenghijauan = (props) => {
 
 const HighlightedFeeds = (props) => {
 	const cardWidth = Math.max(Dimensions.get('window').width * 0.6, 250);
-	const data = [1, 2, 3];
 
 	const viewPhoto = (id) => {
 		props.navigation.navigate('ViewPhoto', {
@@ -42,14 +44,14 @@ const HighlightedFeeds = (props) => {
 
 	const renderItems = ({item, index}) => (
 		<View style={[styles.uploadsCard, {width: cardWidth}]}>
-			<TouchableImage onPress={() => viewPhoto(index)}
+			<TouchableImage onPress={() => viewPhoto(item.id)}
 				style={{flex: 1, backgroundColor: '#eee'}}
-				source={require('../assets/tanam_pohon.jpg')} />
+				source={{uri: item.image}} />
 			
 			<View style={{paddingHorizontal: 8, paddingVertical: 4, flexDirection: 'row'}}>
 				<PosterLayout photoSize={28}
-					title='Khairul Hidayat'
-					subtitle='khairul169' />
+					title={item.name}
+					subtitle={item.username} />
 			</View>
 		</View>
 	)
@@ -60,7 +62,7 @@ const HighlightedFeeds = (props) => {
 				Unggahan Tersorot
 			</Text>
 			<FlatList horizontal={true} showsHorizontalScrollIndicator={false}
-				data={data} renderItem={renderItems} keyExtractor={(item, index) => index.toString()}
+				data={props.unggahan} renderItem={renderItems} keyExtractor={(item, index) => index.toString()}
 				contentContainerStyle={{
 					height: 200, alignItems: 'stretch', paddingHorizontal: 8
 				}} />
@@ -86,7 +88,11 @@ const UpcomingEvent = (props) => {
 	)
 }
 
-export default class Home extends Component {
+class Home extends Component {
+	componentDidMount() {
+		this.props.fetchHome();
+	}
+
 	render() {
 		return (
 			<View style={styles.container}>
@@ -99,11 +105,9 @@ export default class Home extends Component {
 					}*/ />
 
 				<ScrollView style={styles.content}>
-					<StatsPenghijauan jumlahPenghijauan={1827} />
-
-					<HighlightedFeeds navigation={this.props.navigation} />
-
-					<UpcomingEvent navigation={this.props.navigation} />
+					<StatsPenghijauan {...this.props} />
+					<HighlightedFeeds {...this.props} />
+					<UpcomingEvent {...this.props} />
 				</ScrollView>
 			</View>
 		)
@@ -126,3 +130,15 @@ const styles = StyleSheet.create({
 	eventCard: {
 	}
 })
+
+const mapStateToProps = (state) => ({
+	penghijauan: state.home.penghijauan,
+	unggahan: state.home.unggahan,
+	kegiatan: state.home.kegiatan
+})
+
+const mapDispatchToProps = {
+	fetchHome
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home)
