@@ -1,3 +1,4 @@
+import API from './api'
 
 export const setPosts = (posts) => {
 	return {
@@ -16,10 +17,13 @@ export const setIsLoading = (loading) => {
 export const fetchFeeds = () => {
 	return (dispatch) => {
 		dispatch(setIsLoading(true));
-		
-		setTimeout(() => {
-			dispatch(setPosts([2, 3, 4]));
+
+		API.get('feeds', 'get_posts').then(response => {
+			if (response.status === 0) {
+				dispatch(setPosts(response.posts));
+			}
+			
 			dispatch(setIsLoading(false));
-		}, 2000);
+		});
 	}
 }

@@ -12,10 +12,13 @@ class Feeds extends Component {
 		this.props.fetchFeeds();
 	}
 
-	renderPhotoItem = ({index}) => (
-		<PhotoListItem onImagePress={() => this.viewPhoto(index)}
+	renderPhotoItem = ({item, index}) => (
+		<PhotoListItem onImagePress={() => this.viewPhoto(item.id)}
 			style={index > 0 ? {marginTop: 0} : null}
-			liked={index === 1} />
+			image={{uri: item.image}}
+			name={item.name}
+			username={item.username}
+			liked={item.liked} />
 	)
 
 	viewPhoto = (id) => {

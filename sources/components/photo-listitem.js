@@ -19,12 +19,12 @@ const PhotoListItem = (props) => {
 	return (
 		<View style={[styles.container, props.style]}>
 			<TouchableImage style={styles.postImage}
-				source={require('../../assets/tanam_pohon.jpg')}
+				source={props.image}
 				onPress={props.onImagePress} />
 			
 			<View style={styles.bottomContainer}>
-				<PosterLayout title='Khairul Hidayat' subtitle='khairul169'/>
-				<ActionButton icon='heart' iconColor={props.liked ? '#ef5350' : null} label={289} />
+				<PosterLayout title={props.name} subtitle={props.username}/>
+				<ActionButton icon='heart' iconColor={props.liked ? '#ef5350' : null} label={props.likes} />
 			</View>
 		</View>
 	)
