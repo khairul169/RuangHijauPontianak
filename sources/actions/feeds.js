@@ -14,6 +14,13 @@ export const setIsLoading = (loading) => {
 	}
 }
 
+export const setScrollToTop = (scroll) => {
+	return {
+		type: 'FEEDS_SCROLL_TO_TOP',
+		scroll
+	}
+}
+
 export const fetchFeeds = () => {
 	return (dispatch) => {
 		dispatch(setIsLoading(true));

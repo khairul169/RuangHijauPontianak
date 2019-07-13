@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchFeeds } from './actions/feeds'
+import { fetchFeeds, setScrollToTop } from './actions/feeds'
 
 import { StyleSheet, View, Text, FlatList } from 'react-native'
 import { Header, PhotoListItem, HeaderButton } from './components'
@@ -10,6 +10,13 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 class Feeds extends Component {
 	componentDidMount() {
 		this.props.fetchFeeds();
+	}
+
+	componentDidUpdate() {
+		if (this.props.feeds.scrollToTop) {
+			this.scrollToTop();
+			this.props.setScrollToTop(false);
+		}
 	}
 
 	renderPhotoItem = ({item, index}) => (
@@ -34,13 +41,17 @@ class Feeds extends Component {
 
 	onEndReached = () => {
 	}
+
+	scrollToTop = () => {
+		this._feedList.scrollToOffset({offset: 0});
+	}
 	
 	render() {
 		return (
 			<View style={styles.container}>
 				<Header title="Hijau Kote Kite" centerTitle
 					leftComponent={
-						<HeaderButton onPress={() => this._feedList.scrollToOffset({offset: 0})} component={
+						<HeaderButton onPress={this.scrollToTop} component={
 								<FontAwesome name='comments' style={{color: '#689F38'}} size={20} />
 							} />
 					}
@@ -77,7 +88,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-	fetchFeeds
+	fetchFeeds,
+	setScrollToTop
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Feeds)

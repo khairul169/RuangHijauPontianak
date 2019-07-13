@@ -1,7 +1,8 @@
 
 const initialState = {
 	posts: [],
-	isLoading: false
+	isLoading: false,
+	scrollToTop: false
 }
 
 export const feeds = (state = initialState, action) => {
@@ -10,6 +11,8 @@ export const feeds = (state = initialState, action) => {
 			return {...state, posts: action.value};
 		case 'FEEDS_IS_LOADING':
 			return {...state, isLoading: action.value};
+		case 'FEEDS_SCROLL_TO_TOP':
+			return {...state, scrollToTop: action.scroll};
 		default:
 			return state;
 	}

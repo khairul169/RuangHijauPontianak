@@ -1,13 +1,28 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { fetchFeeds, setScrollToTop } from '../actions/feeds'
+import API from '../actions/api'
+
 import { Text, StyleSheet, View, ScrollView, TouchableOpacity, TextInput, Dimensions } from 'react-native'
 import ImagePicker from 'react-native-image-picker'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { Header, Image } from '../components'
+import { DotIndicator } from 'react-native-indicators'
 
-export default class UploadPhoto extends Component {
+const LoadingIndicator = (props) => {
+	return (
+		<View style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
+			backgroundColor: '#0004', alignItems: 'center', justifyContent: 'center'}}>
+			<DotIndicator size={12} count={4} color='#fff' />
+		</View>
+	)
+}
+
+class UploadPhoto extends Component {
 	state = {
-		photoSelected: null
+		photoSelected: null,
+		isLoading: false
 	}
 
 	selectPhoto = () => {
@@ -39,9 +54,39 @@ export default class UploadPhoto extends Component {
 	}
 
 	removePhoto = () => {
+		if (!this.state.photoSelected || this.state.isLoading) {
+			return;
+		}
+		
 		this.setState({
 			photoSelected: null
 		});
+	}
+
+	onSubmit = async () => {
+		if (!this.state.photoSelected || this.state.isLoading) {
+			return;
+		}
+
+		this.setState({isLoading: true});
+
+		const data = {
+			image: this.state.photoSelected.data,
+			desc: 'test'
+		};
+
+		let result = await API.post('post', 'create', data);
+		if (result && result.status === 0) {
+			this.onSubmitSuccess();
+		}
+
+		this.setState({isLoading: false});
+	}
+
+	onSubmitSuccess = () => {
+		this.props.fetchFeeds();
+		this.props.feedsScrollToTop();
+		this.props.navigation.navigate('Feeds');
 	}
 
 	render() {
@@ -70,6 +115,8 @@ export default class UploadPhoto extends Component {
 									onPress={this.removePhoto}>
 									<FontAwesome name='remove' size={14} style={{color: '#fff'}} />
 								</TouchableOpacity>
+
+								{ this.state.isLoading ? <LoadingIndicator /> : null }
 							</View>
 						) }
 					</View>
@@ -80,9 +127,10 @@ export default class UploadPhoto extends Component {
 					</View>
 				</ScrollView>
 
-				<View style={{padding: 16, backgroundColor: '#8BC34A'}}>
+				<TouchableOpacity style={{padding: 16, backgroundColor: '#8BC34A'}}
+					onPress={this.onSubmit}>
 					<Text style={{textAlign: 'center', color: '#fff'}}>UNGGAH</Text>
-				</View>
+				</TouchableOpacity>
 			</View>
 		)
 	}
@@ -93,3 +141,14 @@ const styles = StyleSheet.create({
 		flex: 1
 	}
 })
+
+const mapStateToProps = (state) => ({
+	
+})
+
+const mapDispatchToProps = {
+	fetchFeeds,
+	feedsScrollToTop: () => setScrollToTop(true)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(UploadPhoto)
