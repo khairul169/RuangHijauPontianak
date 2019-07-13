@@ -132,6 +132,7 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = (state) => ({
+	isLoading: state.home.isLoading,
 	penghijauan: state.home.penghijauan,
 	unggahan: state.home.unggahan,
 	kegiatan: state.home.kegiatan

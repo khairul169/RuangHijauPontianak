@@ -1,16 +1,20 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { fetchData } from '../actions/view-photo'
+
 import { Text, StyleSheet, View, Dimensions, ScrollView, TouchableHighlight, TextInput } from 'react-native'
-import Image from 'react-native-scalable-image'
-import { Header, PosterLayout, HeaderButton } from '../components'
+import { Header, PosterLayout, HeaderButton, Image, LoadingLayout } from '../components'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 const ActionButton = (props) => {
 	return (
 		<TouchableHighlight style={[{flex: props.noFlex ? null : 1, justifyContent: 'center'}, props.style]}
 			onPress={props.onPress} underlayColor={null}>
+			
 			<View style={[{alignItems: 'center', justifyContent: 'center', flexDirection: 'row'},
 				props.leftBorder ? {borderLeftColor: '#eee', borderLeftWidth: 1} : null]}>
-				<MaterialCommunityIcons name={props.icon} style={{color: '#686868'}} size={18} />
+				<MaterialCommunityIcons name={props.icon}
+					style={{color: props.iconColor ? props.iconColor : '#828282'}} size={18} />
 
 				{ props.label && (
 					<Text style={{fontSize: 14, color: '#424242', marginLeft: 10}}>{props.label}</Text>
@@ -20,14 +24,19 @@ const ActionButton = (props) => {
 	)
 }
 
-export default class ViewPhoto extends Component {
-	constructor(props) {
-		super(props);
-
-		this.photoIndex = props.navigation.getParam('index', null);
+class ViewPhoto extends Component {
+	componentDidMount() {
+		const postIndex = this.props.navigation.getParam('index', null);
+		this.props.fetchData(postIndex);
 	}
 
 	render() {
+		if (this.props.isLoading) {
+			return <LoadingLayout />
+		}
+
+		const { post } = this.props;
+
 		return (
 			<View style={styles.container}>
 				<Header backButton navigation={this.props.navigation}
@@ -39,12 +48,19 @@ export default class ViewPhoto extends Component {
 					} />
 				
 				<ScrollView style={{flex: 1}}>
-					<Image source={require('../../assets/tanam_pohon.jpg')}
-						width={Dimensions.get('window').width} />
+					{ post && (
+						<Image
+							source={{uri: post.image}}
+							width={Dimensions.get('window').width} />
+					) }
 					
 					<View style={{padding: 16}}>
-						<PosterLayout title='Khairul Hidayat' subtitle='Siantan Hulu • 27 Januari 2019 14.32'/>
-						<Text style={styles.postDescription}>Hello world! this is some photo description text to describe photo in some words.</Text>
+						<PosterLayout
+							title={post ? post.name : null}
+							subtitle={post ? `${post.location} • ${post.date}` : null} />
+						<Text style={styles.postDescription}>
+							{post ? post.desc : null}
+						</Text>
 					</View>
 
 					{/*<View style={{flex: 1, flexDirection: 'row', alignItems: 'center', marginBottom: 12}}>
@@ -57,7 +73,12 @@ export default class ViewPhoto extends Component {
 					<View style={{flex: 1, flexDirection: 'row', alignItems: 'stretch', height: 50,
 						borderTopColor: '#eee', borderTopWidth: 1,
 						borderBottomColor: '#eee', borderBottomWidth: 1}}>
-						<ActionButton icon='heart' label={142} onPress={() => alert('test')} />
+						
+						<ActionButton icon='heart'
+							label={post ? post.likes.toString() : null}
+							iconColor={post && post.liked ? '#ef5350' : null}
+							onPress={() => alert('test')} />
+						
 						{/*<ActionButton icon='share' leftBorder onPress={() => alert('test')}  />*/}
 					</View>
 				</ScrollView>
@@ -74,3 +95,14 @@ const styles = StyleSheet.create({
 		fontSize: 14, color: '#424242', marginTop: 16, lineHeight: 20
 	}
 })
+
+const mapStateToProps = (state) => ({
+	isLoading: state.viewPhoto.isLoading,
+	post: state.viewPhoto.postData
+})
+
+const mapDispatchToProps = {
+	fetchData
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ViewPhoto)

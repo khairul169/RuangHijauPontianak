@@ -5,6 +5,7 @@ import { HeaderButton, HeaderItem } from './header-buttons'
 import EventCard from './event-card'
 import PosterLayout from './poster-layout'
 import { Image, CoverImage, TouchableImage } from './images'
+import LoadingLayout from './loading-layout'
 
 export {
 	Header,
@@ -16,5 +17,6 @@ export {
 	PosterLayout,
 	Image,
 	CoverImage,
-	TouchableImage
+	TouchableImage,
+	LoadingLayout
 }

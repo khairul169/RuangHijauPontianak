@@ -18,6 +18,7 @@ class Feeds extends Component {
 			image={{uri: item.image}}
 			name={item.name}
 			username={item.username}
+			likes={item.likes.toString()}
 			liked={item.liked} />
 	)
 

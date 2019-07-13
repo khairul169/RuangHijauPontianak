@@ -8,6 +8,8 @@ const initialState = {
 
 export const home = (state = initialState, action) => {
 	switch (action.type) {
+		case 'HOME_SET_LOADING':
+			return {...state, isLoading: action.loading};
 		case 'HOME_SET_STATE':
 			return {...state, ...action.state};
 		case 'HOME_RESET_STATE':
