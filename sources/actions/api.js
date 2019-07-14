@@ -1,13 +1,27 @@
 
-const baseUrl = 'http://192.168.43.48/rhp/api/';
-
-const getUrl = (route, action) => {
-	return baseUrl + `?r=${route}&action=${action}`;
-}
+const DEBUG_RESULT = true;
+const API_URL = 'http://192.168.43.48/rhp/api/';
 
 class API {
-	static get = async (route, action, args = null) => {
-		let url = getUrl(route, action);
+	static getUrl = (route, action) => {
+		return API_URL + `?r=${route}&action=${action}`;
+	}
+
+	static getHeaders = (state, post = false) => {
+		let headers = {
+			'Accept': 'application/json',
+			'Content-Type': post ? 'multipart/form-data' : 'application/json'
+		};
+	
+		if (state && state.sessionId) {
+			headers['Authorization'] = 'Bearer ' + state.sessionId;
+		}
+		
+		return headers;
+	}
+
+	static get = async (auth, route, action, args = null) => {
+		let url = API.getUrl(route, action);
 
 		if (args) {
 			for (var key in args) {
@@ -17,14 +31,12 @@ class API {
 
 		return fetch(url, {
 			method: 'GET',
-			headers: {
-				'Accept': 'application/json',
-   				'Content-Type': 'application/json'
-			}
+			headers: API.getHeaders(auth)
 		})
 		.then(response => response.json())
-		.then(json => {
-			return json;
+		.then(response => {
+			DEBUG_RESULT && console.log(response);
+			return response;
 		})
 		.catch((error) => {
 			console.log(error.message);
@@ -32,8 +44,8 @@ class API {
 		});
 	}
 
-	static post = async (route, action, data = null) => {
-		const url = getUrl(route, action);
+	static post = async (auth, route, action, data = null) => {
+		const url = API.getUrl(route, action);
 		let formData = new FormData();
 
 		if (data) {
@@ -44,15 +56,13 @@ class API {
 
 		return fetch(url, {
 			method: 'POST',
-			headers: {
-				'Accept': 'application/json',
-   				'Content-Type': 'multipart/form-data'
-			},
+			headers: API.getHeaders(auth, true),
 			body: formData
 		})
 		.then(response => response.json())
-		.then(json => {
-			return json;
+		.then(response => {
+			DEBUG_RESULT && console.log(response);
+			return response;
 		})
 		.catch((error) => {
 			console.log(error.message);

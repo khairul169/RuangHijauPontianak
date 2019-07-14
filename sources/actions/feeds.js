@@ -22,15 +22,18 @@ export const setScrollToTop = (scroll) => {
 }
 
 export const fetchFeeds = () => {
-	return (dispatch) => {
+	return (dispatch, getState) => {
+		// set loading state
 		dispatch(setIsLoading(true));
 
-		API.get('feeds', 'get_posts').then(response => {
-			if (response.status === 0) {
-				dispatch(setPosts(response.posts));
-			}
-			
-			dispatch(setIsLoading(false));
-		});
+		let response = API.get(getState().auth, 'feeds', 'get_posts');
+		
+		if (response && response.status === 0) {
+			// set new posts state
+			dispatch(setPosts(response.posts));
+		}
+		
+		// set loading state
+		dispatch(setIsLoading(false));
 	}
 }

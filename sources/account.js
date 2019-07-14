@@ -1,6 +1,11 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { clearState } from './actions/auth'
+import DataStorage from './data-storage'
+import { NavigationActions } from 'react-navigation'
+
 import { Text, StyleSheet, View, ScrollView } from 'react-native'
-import { Header, TouchableImage } from './components'
+import { Header, TouchableImage, HeaderButton } from './components'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 const Test = (props) => {
@@ -11,11 +16,21 @@ const Test = (props) => {
 	)
 }
 
-export default class Account extends Component {
+class Account extends Component {
 	viewPhoto = (id) => {
 		this.props.navigation.navigate('ViewPhoto', {
 			index: id
 		});
+	}
+
+	logout = async () => {
+		await DataStorage.removeData(DataStorage.sessionId);
+		this.props.clearAuthState();
+
+		// go back to auth screen
+		this.props.navigation.reset([
+			NavigationActions.navigate({routeName: 'Auth'})
+		], 0);
 	}
 
 	render() {
@@ -24,6 +39,11 @@ export default class Account extends Component {
 				<Header title="Akun" centerTitle
 					leftComponent={
 						<MaterialCommunityIcons name='account-tie' style={{color: '#689F38'}} size={20} />
+					}
+					rightComponent={
+						<HeaderButton onPress={this.logout} component={
+							<MaterialCommunityIcons name='logout' style={{color: '#686868'}} size={20} />
+						} />
 					} />
 				
 				<ScrollView style={{flex: 1, backgroundColor: '#fff'}}>
@@ -64,3 +84,10 @@ const styles = StyleSheet.create({
 		flex: 1
 	}
 })
+
+const mapDispatchToProps = {
+	clearAuthState: clearState
+}
+
+export default connect(null, mapDispatchToProps)(Account)
+

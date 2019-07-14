@@ -8,6 +8,7 @@ import Footer from './components/footer'
 YellowBox.ignoreWarnings(['ViewPagerAndroid']);
 
 // Main screens
+import Auth from './auth'
 import Home from './home'
 import Events from './events'
 import Feeds from './feeds'
@@ -36,11 +37,13 @@ const indexTabNavigator = createMaterialTopTabNavigator({
 })
 
 const stackContainer = createStackNavigator({
-	index: indexTabNavigator,
+	Auth,
+	Index: indexTabNavigator,
 	ViewPhoto,
 	UploadPhoto,
 	ViewEvent
 }, {
+	initialRouteName: 'Auth',
 	headerMode: 'none',
 	transitionConfig: slideTransition
 })

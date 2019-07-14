@@ -75,7 +75,7 @@ class UploadPhoto extends Component {
 			desc: 'test'
 		};
 
-		let result = await API.post('post', 'create', data);
+		let result = await API.post(this.props.auth, 'post', 'create', data);
 		if (result && result.status === 0) {
 			this.onSubmitSuccess();
 		}
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = (state) => ({
-	
+	auth: state.auth
 })
 
 const mapDispatchToProps = {

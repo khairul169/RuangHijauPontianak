@@ -21,21 +21,25 @@ export const resetState = () => {
 }
 
 export const fetchHome = () => {
-	return (dispatch) => {
+	return async (dispatch, getState) => {
+		// set loading state
 		dispatch(setIsLoading(true));
 
-		API.get('home').then(response => {
-			if (response.status === 0) {
-				dispatch(setState({
-					penghijauan: response.penghijauan,
-					unggahan: response.unggahan,
-					kegiatan: response.kegiatan
-				}));
-			} else {
-				dispatch(resetState());
-			}
-			
-			dispatch(setIsLoading(false));
-		});
+		let response = await API.get(getState().auth, 'home');
+		
+		if (response && response.status === 0) {
+			// result ok, set new state
+			dispatch(setState({
+				penghijauan: response.penghijauan,
+				unggahan: response.unggahan,
+				kegiatan: response.kegiatan
+			}));
+		} else {
+			// failed, reset state
+			dispatch(resetState());
+		}
+		
+		// set loading state to false
+		dispatch(setIsLoading(false));
 	}
 }

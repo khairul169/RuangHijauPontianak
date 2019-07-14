@@ -15,17 +15,21 @@ export const setPostData = (data) => {
 }
 
 export const fetchData = (id) => {
-	return (dispatch) => {
+	return async (dispatch, getState) => {
+		// set loading state
 		dispatch(setIsLoading(true));
 
-		API.get('post', 'get_post', {id}).then(response => {
-			if (response.status === 0) {
-				dispatch(setPostData(response.post));
-			} else {
-				dispatch(setPostData(null));
-			}
-			
-			dispatch(setIsLoading(false));
-		});
+		let response = await API.get(getState().auth, 'post', 'get_post', {id});
+		
+		if (response && response.status === 0) {
+			// set post data
+			dispatch(setPostData(response.post));
+		} else {
+			// reset data
+			dispatch(setPostData(null));
+		}
+		
+		// set loading state
+		dispatch(setIsLoading(false));
 	}
 }
