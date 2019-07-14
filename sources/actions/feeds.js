@@ -22,11 +22,11 @@ export const setScrollToTop = (scroll) => {
 }
 
 export const fetchFeeds = () => {
-	return (dispatch, getState) => {
+	return async (dispatch, getState) => {
 		// set loading state
 		dispatch(setIsLoading(true));
 
-		let response = API.get(getState().auth, 'feeds', 'get_posts');
+		let response = await API.get(getState().auth, 'feeds', 'get_posts');
 		
 		if (response && response.status === 0) {
 			// set new posts state
