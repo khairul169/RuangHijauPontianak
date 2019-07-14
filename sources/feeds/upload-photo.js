@@ -22,7 +22,8 @@ const LoadingIndicator = (props) => {
 class UploadPhoto extends Component {
 	state = {
 		photoSelected: null,
-		isLoading: false
+		isLoading: false,
+		description: ''
 	}
 
 	selectPhoto = () => {
@@ -72,7 +73,7 @@ class UploadPhoto extends Component {
 
 		const data = {
 			image: this.state.photoSelected.data,
-			desc: 'test'
+			desc: this.state.description
 		};
 
 		let result = await API.post(this.props.auth, 'post', 'create', data);
@@ -123,7 +124,8 @@ class UploadPhoto extends Component {
 
 					<View style={{elevation: 3, backgroundColor: '#fff'}}>
 						<TextInput style={{padding: 16}} placeholder='Berikan deskripsi...'
-							multiline={true} />
+							multiline={true} value={this.state.description}
+							onChangeText={v => this.setState({description: v})} />
 					</View>
 				</ScrollView>
 
