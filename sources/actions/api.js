@@ -33,10 +33,15 @@ class API {
 			method: 'GET',
 			headers: API.getHeaders(auth)
 		})
-		.then(response => response.json())
+		.then(response => response.text())
 		.then(response => {
-			DEBUG_RESULT && console.log(response);
-			return response;
+			try {
+				const json = JSON.parse(response);
+				DEBUG_RESULT && console.log(json);
+				return json;
+			} catch (error) {
+				return Promise.reject({message: error + response});
+			}
 		})
 		.catch((error) => {
 			console.log(error.message);
@@ -59,10 +64,15 @@ class API {
 			headers: API.getHeaders(auth, true),
 			body: formData
 		})
-		.then(response => response.json())
+		.then(response => response.text())
 		.then(response => {
-			DEBUG_RESULT && console.log(response);
-			return response;
+			try {
+				const json = JSON.parse(response);
+				DEBUG_RESULT && console.log(json);
+				return json;
+			} catch (error) {
+				return Promise.reject({message: error + response});
+			}
 		})
 		.catch((error) => {
 			console.log(error.message);
