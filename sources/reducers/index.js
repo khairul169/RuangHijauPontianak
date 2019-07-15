@@ -5,13 +5,11 @@ import thunk from 'redux-thunk'
 import { auth } from './auth.reducer'
 import { home } from './home.reducer'
 import { feeds } from './feeds.reducer'
-import { viewPhoto } from './view-photo.reducer'
 
 const reducers = combineReducers({
 	auth,
 	home,
-	feeds,
-	viewPhoto
+	feeds
 })
 
 export default createStore(reducers, applyMiddleware(thunk))
