@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { fetchLogin, validateSession } from './actions/auth'
 import { StyleSheet, View, TextInput, StatusBar, TouchableOpacity, Text } from 'react-native'
+import { LoadingLayout } from './components'
 
 export const UserInput = (props) => {
 	return (
@@ -44,10 +45,16 @@ const Auth = (props) => {
 
 	// props updated
 	useEffect(() => {
-		if (auth.loggedIn) {
+		if (auth.loaded && auth.sessionId) {
 			navigation.replace('Index');
 		}
-	});
+	}, [auth]);
+
+	if (!auth.loaded || auth.sessionId) {
+		return (
+			<LoadingLayout />
+		)
+	}
 
 	return (
 		<View style={styles.container}>

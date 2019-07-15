@@ -1,10 +1,22 @@
 import API from './api'
 import DataStorage from '../data-storage'
 
-const setState = (state) => {
+const setLoading = () => {
 	return {
-		type: 'AUTH_SET_STATE',
-		state
+		type: 'AUTH_SET_LOADING'
+	}
+}
+
+const setLoaded = () => {
+	return {
+		type: 'AUTH_SET_LOADED'
+	}
+}
+
+const setSessionId = (session) => {
+	return {
+		type: 'AUTH_SET_SESSION',
+		session
 	}
 }
 
@@ -16,7 +28,7 @@ export const clearState = () => {
 
 export const fetchLogin = ({username, password}) => {
 	return async (dispatch) => {
-		dispatch(setState({isLoading: true}));
+		dispatch(setLoading());
 
 		let response = await API.post(null, 'auth', 'login', {
 			username,
@@ -24,21 +36,20 @@ export const fetchLogin = ({username, password}) => {
 		});
 		
 		if (response && response.status === 0 && response.sessionId !== null) {
+			// store session
 			await DataStorage.storeData(DataStorage.sessionId, response.sessionId);
 
-			dispatch(setState({
-				loggedIn: true,
-				sessionId: response.sessionId
-			}));
+			// set session
+			dispatch(setSessionId(response.sessionId));
+		} else {
+			dispatch(setLoaded());
 		}
-
-		dispatch(setState({isLoading: false}));
 	}
 }
 
 export const fetchRegister = ({fullName, username, password}) => {
 	return async (dispatch) => {
-		dispatch(setState({isLoading: true}));
+		dispatch(setLoading());
 
 		let response = await API.post(null, 'auth', 'register', {
 			fullName,
@@ -47,21 +58,20 @@ export const fetchRegister = ({fullName, username, password}) => {
 		});
 		
 		if (response && response.status === 0 && response.sessionId !== null) {
+			// store session
 			await DataStorage.storeData(DataStorage.sessionId, response.sessionId);
 
-			dispatch(setState({
-				loggedIn: true,
-				sessionId: response.sessionId
-			}));
+			// set state
+			dispatch(setSessionId(response.sessionId));
+		} else {
+			dispatch(setLoaded());
 		}
-
-		dispatch(setState({isLoading: false}));
 	}
 }
 
 export const validateSession = () => {
 	return async (dispatch) => {
-		dispatch(setState({isLoading: true}));
+		dispatch(setLoading());
 
 		let loginSuccess = false;
 		let sessionId = await DataStorage.getData(DataStorage.sessionId);
@@ -76,19 +86,13 @@ export const validateSession = () => {
 		}
 
 		if (loginSuccess) {
+			// store session
 			await DataStorage.storeData(DataStorage.sessionId, sessionId);
 
-			dispatch(setState({
-				loggedIn: true,
-				sessionId
-			}));
+			// set state
+			dispatch(setSessionId(sessionId));
 		} else {
-			dispatch(setState({
-				loggedIn: false,
-				sessionId: null
-			}));
+			dispatch(setLoaded());
 		}
-
-		dispatch(setState({isLoading: false}));
 	}
 }
