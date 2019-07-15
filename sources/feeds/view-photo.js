@@ -46,6 +46,7 @@ class ViewPhoto extends Component {
 		}
 
 		const { post } = this.props;
+		const window = Dimensions.get('window');
 
 		return (
 			<View style={styles.container}>
@@ -58,44 +59,47 @@ class ViewPhoto extends Component {
 					} />
 				
 				<ScrollView style={{flex: 1}}>
-					{ post && (
-						<View style={{backgroundColor: '#eee', alignItems: 'center'}}>
-							<Image
-								source={{uri: post.image}}
-								width={Dimensions.get('window').width}
-								height={350} />
-						</View>
-					) }
-					
 					<View style={{padding: 16}}>
 						<PosterLayout
 							title={post ? post.name : null}
 							subtitle={post ? (post.location ? `${post.location} • ${post.date}` : post.date) : null}
 							onPress={this.viewUserProfile} />
-						<Text style={styles.postDescription}>
-							{post ? post.desc : null}
-						</Text>
+						
+						{ post && post.desc ? (
+							<Text style={styles.postDescription}>
+								{post.desc}
+							</Text>
+						) : null }
 					</View>
 
-					{/*<View style={{flex: 1, flexDirection: 'row', alignItems: 'center', marginBottom: 12}}>
+					{ post && (
+						<View style={{backgroundColor: '#eee', alignItems: 'center'}}>
+							<Image
+								source={{uri: post.image}}
+								width={window.width}
+								height={(window.height * 0.6)} />
+						</View>
+					) }
+
+					<View style={{flexDirection: 'row', alignItems: 'center', marginVertical: 16}}>
 						<TextInput placeholder="Berikan komentar.." style={{flex: 1, marginLeft: 16,
 							borderColor: '#eee', borderWidth: 1, borderRadius: 10,
 							paddingVertical: 4, paddingHorizontal: 16}} />
 						<ActionButton icon='comment-plus' noFlex style={{width: 60}} />
-					</View>*/}
-
-					<View style={{flex: 1, flexDirection: 'row', alignItems: 'stretch', height: 50,
-						borderTopColor: '#eee', borderTopWidth: 1,
-						borderBottomColor: '#eee', borderBottomWidth: 1}}>
-						
-						<ActionButton icon='heart'
-							label={post ? post.likes.toString() : null}
-							iconColor={post && post.liked ? '#ef5350' : null}
-							onPress={() => this.props.likePost(this.postId)} />
-						
-						{/*<ActionButton icon='share' leftBorder onPress={() => alert('test')}  />*/}
 					</View>
 				</ScrollView>
+
+				<View style={{flexDirection: 'row', alignItems: 'stretch', height: 50,
+					borderTopColor: '#eee', borderTopWidth: 1,
+					borderBottomColor: '#eee', borderBottomWidth: 1}}>
+					
+					<ActionButton icon='heart'
+						label={post ? post.likes.toString() : null}
+						iconColor={post && post.liked ? '#ef5350' : null}
+						onPress={() => this.props.likePost(this.postId)} />
+					
+					{/*<ActionButton icon='share' leftBorder onPress={() => alert('test')}  />*/}
+				</View>
 			</View>
 		)
 	}
