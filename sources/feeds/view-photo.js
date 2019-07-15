@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchData, likePost } from '../actions/view-photo'
-
+import API from '../actions/api'
 import { Text, StyleSheet, View, Dimensions, ScrollView, TouchableHighlight, TextInput } from 'react-native'
 import { Header, PosterLayout, HeaderButton, Image, LoadingLayout } from '../components'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -25,9 +24,57 @@ const ActionButton = (props) => {
 }
 
 class ViewPhoto extends Component {
+	state = {
+		isLoading: false,
+		post: null
+	}
+
+	postId = null;
+
+	fetchData = async () => {
+		// set loading
+		this.setState({ isLoading: true });
+
+		// fetch data
+		const result = await API.get(this.props.auth, 'post', 'get_post', {id: this.postId});
+		
+		if (result && result.status === 0) {
+			// set post data
+			this.setState({
+				isLoading: false,
+				post: result.post
+			});
+		} else {
+			this.setState({
+				isLoading: false,
+				post: null
+			});
+		}
+	}
+
+	likePost = async () => {
+		if (!this.state.post) {
+			return;
+		}
+
+		// fetch data
+		const result = await API.get(this.props.auth, 'post', 'like', {id: this.postId});
+		
+		if (result && result.status === 0) {
+			// set post data
+			this.setState({
+				post: {
+					...this.state.post,
+					likes: result.likes,
+					liked: result.liked
+				}
+			});
+		}
+	}
+
 	componentDidMount() {
 		this.postId = this.props.navigation.getParam('index', null);
-		this.props.fetchData(this.postId);
+		this.fetchData();
 	}
 
 	viewUserProfile = () => {
@@ -45,7 +92,7 @@ class ViewPhoto extends Component {
 			return <LoadingLayout />
 		}
 
-		const { post } = this.props;
+		const { post } = this.state;
 		const window = Dimensions.get('window');
 
 		return (
@@ -96,9 +143,7 @@ class ViewPhoto extends Component {
 					<ActionButton icon='heart'
 						label={post ? post.likes.toString() : null}
 						iconColor={post && post.liked ? '#ef5350' : null}
-						onPress={() => this.props.likePost(this.postId)} />
-					
-					{/*<ActionButton icon='share' leftBorder onPress={() => alert('test')}  />*/}
+						onPress={this.likePost} />
 				</View>
 			</View>
 		)
@@ -115,13 +160,7 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = (state) => ({
-	isLoading: state.viewPhoto.isLoading,
-	post: state.viewPhoto.postData
+	auth: state.auth
 })
 
-const mapDispatchToProps = {
-	fetchData,
-	likePost
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ViewPhoto)
+export default connect(mapStateToProps)(ViewPhoto)
