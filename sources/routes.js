@@ -16,6 +16,7 @@ import Feeds from './feeds'
 import Account from './account'
 
 // Screens stacks
+import ViewUser from './account/view-user'
 import ViewPhoto from './feeds/view-photo'
 import UploadPhoto from './feeds/upload-photo'
 import ViewEvent from './events/view-event'
@@ -41,6 +42,7 @@ const stackContainer = createStackNavigator({
 	Auth,
 	Register,
 	Index: indexTabNavigator,
+	ViewUser,
 	ViewPhoto,
 	UploadPhoto,
 	ViewEvent

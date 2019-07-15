@@ -6,7 +6,7 @@ import { NavigationActions } from 'react-navigation'
 
 import { StyleSheet, View } from 'react-native'
 import { Header, HeaderButton } from './components'
-import UserProfile from './components/user-profile'
+import ProfileLayout from './account/profile-layout'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 class Account extends Component {
@@ -33,7 +33,7 @@ class Account extends Component {
 						} />
 					} />
 				
-				<UserProfile navigation={this.props.navigation} />
+				<ProfileLayout navigation={this.props.navigation} />
 			</View>
 		)
 	}

@@ -8,12 +8,12 @@ const PosterLayout = (props) => {
 
 	return (
 		<View style={styles.container}>
-			<TouchableImage onPress={props.onImagePress}
+			<TouchableImage onPress={props.onPress}
 				style={[styles.img, imgStyle]}
 				source={props.photoSource} />
 
 			<View style={{flex: 1, marginLeft: 16}}>
-				<Text style={styles.title}>{props.title}</Text>
+				<Text onPress={props.onPress} style={styles.title}>{props.title}</Text>
 				{props.subtitle ? <Text style={styles.subtitle}>{props.subtitle}</Text> : null }
 			</View>
 		</View>
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
 		flexDirection: 'row', alignItems: 'center', flex: 1
 	},
 	img: {
-		backgroundColor: '#626262'
+		backgroundColor: '#ddd'
 	},
 	title: {
 		fontSize: 14, color: '#689F38'

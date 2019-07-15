@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import API from '../actions/api'
 
 import { View, Text, StyleSheet, ScrollView, Dimensions, RefreshControl } from 'react-native'
-import { TouchableImage } from './images'
+import { TouchableImage } from '../components'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 const Test = (props) => {
@@ -14,7 +14,7 @@ const Test = (props) => {
 	)
 }
 
-const UserProfile = (props) => {
+const ProfileLayout = (props) => {
 	const initialUserState = {
 		profile: null,
 		posts: [],
@@ -35,7 +35,7 @@ const UserProfile = (props) => {
 	}
 
 	const viewPhoto = (id) => {
-		props.navigation.navigate('ViewPhoto', {
+		props.navigation.push('ViewPhoto', {
 			index: id
 		});
 	}
@@ -43,10 +43,13 @@ const UserProfile = (props) => {
 	const refresh = async () => {
 		setRefreshing(true);
 
-		const result = await API.get(props.auth, 'profile', 'view');
+		const result = await API.get(props.auth, 'profile', 'view', props.userId ? {
+			id: props.userId
+		} : null);
 
 		if (result && result.status === 0) {
 			setUser(result);
+			props.onUserLoaded && props.onUserLoaded(result.profile.name);
 		} else {
 			setUser(initialUserState);
 		}
@@ -60,9 +63,12 @@ const UserProfile = (props) => {
 
 	return (
 		<ScrollView style={styles.container}
-			refreshControl={<RefreshControl refreshing={refreshing} onRefresh={refresh} />}>
+			refreshControl={
+				<RefreshControl refreshing={refreshing} onRefresh={refresh} />
+			}>
 			<View style={{padding: 16, flexDirection: 'row', alignItems: 'center',
 				backgroundColor:'#fff', zIndex: -1}}>
+
 				<View style={{width: 96, height: 96, borderRadius: 96/2, backgroundColor: '#ddd'}} />
 
 				<View style={{flex: 1, marginLeft: 24}}>
@@ -111,4 +117,4 @@ const mapStateToProps = (state) => ({
 	auth: state.auth
 })
 
-export default connect(mapStateToProps)(UserProfile)
+export default connect(mapStateToProps)(ProfileLayout)

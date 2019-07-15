@@ -30,6 +30,16 @@ class ViewPhoto extends Component {
 		this.props.fetchData(this.postId);
 	}
 
+	viewUserProfile = () => {
+		const { post, navigation } = this.props;
+
+		if (post && post.user) {
+			navigation.navigate('ViewUser', {
+				id: post.user
+			});
+		}
+	}
+
 	render() {
 		if (this.props.isLoading) {
 			return <LoadingLayout />
@@ -60,7 +70,8 @@ class ViewPhoto extends Component {
 					<View style={{padding: 16}}>
 						<PosterLayout
 							title={post ? post.name : null}
-							subtitle={post ? (post.location ? `${post.location} • ${post.date}` : post.date) : null} />
+							subtitle={post ? (post.location ? `${post.location} • ${post.date}` : post.date) : null}
+							onPress={this.viewUserProfile} />
 						<Text style={styles.postDescription}>
 							{post ? post.desc : null}
 						</Text>
