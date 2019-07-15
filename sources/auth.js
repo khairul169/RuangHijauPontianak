@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { fetchLogin, validateSession } from './actions/auth'
-import { StyleSheet, View, TextInput, StatusBar, TouchableOpacity, Text } from 'react-native'
+import { StyleSheet, View, TextInput, StatusBar, TouchableOpacity, Text, Image } from 'react-native'
 import { LoadingLayout } from './components'
 
 export const UserInput = (props) => {
@@ -58,9 +58,11 @@ const Auth = (props) => {
 
 	return (
 		<View style={styles.container}>
-			<StatusBar backgroundColor='#333' barStyle='light-content' />
+			<StatusBar backgroundColor='#7CB342' barStyle='light-content' />
 
-			<View style={{flex: 1}}>
+			<View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+				<Image source={require('../assets/app-icon.png')} style={{width: 128, height: 128}} />
+				<Text style={{fontSize: 16, color: '#424242', marginTop: 10}}>RUMAH HIJAU PONTIANAK</Text>
 			</View>
 
 			<View style={{padding: 16}}>

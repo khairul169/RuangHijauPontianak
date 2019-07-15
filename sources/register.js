@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { fetchRegister } from './actions/auth'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, View, Image } from 'react-native'
 import { Header } from './components'
 import { UserInput, SubmitButton } from './auth'
 
@@ -27,9 +27,10 @@ const Register = (props) => {
 
 	return (
 		<View style={styles.container}>
-			<Header title="Daftar" centerTitle />
+			<Header title="Daftar" centerTitle backButton navigation={props.navigation} />
 
-			<View style={{flex: 1}}>
+			<View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+				<Image source={require('../assets/app-icon.png')} style={{width: 128, height: 128}} />
 			</View>
 
 			<View style={{padding: 16}}>
