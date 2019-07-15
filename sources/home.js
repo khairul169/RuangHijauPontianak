@@ -109,13 +109,7 @@ class Home extends Component {
 	render() {
 		return (
 			<View style={styles.container}>
-				<Header title="Ruang Hijau Pontianak" centerTitle
-					leftComponent={
-						<MaterialIcons name='home' style={{color: '#689F38'}} size={20} />
-					}
-					/*rightComponent={
-						<MaterialIcons name='notifications' style={{color: '#686868'}} size={18} />
-					}*/ />
+				<Header title="Ruang Hijau Pontianak" centerTitle />
 
 				<ScrollView style={styles.content} refreshControl={
 					<RefreshControl refreshing={this.props.isLoading} onRefresh={this.refresh} />
