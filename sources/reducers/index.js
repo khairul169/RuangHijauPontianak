@@ -5,11 +5,13 @@ import thunk from 'redux-thunk'
 import { auth } from './auth.reducer'
 import { home } from './home.reducer'
 import { feeds } from './feeds.reducer'
+import { events } from './events.reducer'
 
 const reducers = combineReducers({
 	auth,
 	home,
-	feeds
+	feeds,
+	events
 })
 
 export default createStore(reducers, applyMiddleware(thunk))

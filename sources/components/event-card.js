@@ -10,14 +10,19 @@ const EventCard = (props) => {
 				<View style={styles.eventDetail}>
 					<MaterialIcons name='event' style={styles.eventIcon} />
 
-					<View style={{marginLeft: 12}}>
-						<Text style={{fontSize: 14, color: '#333'}}>Nama Event</Text>
-						<Text style={{fontSize: 12, color: '#626262'}}>Singkawang • 27 Januari 2019</Text>
+					<View style={{flex: 1, marginHorizontal: 12}}>
+						<Text style={{fontSize: 14, color: '#333'}}>{props.title}</Text>
 					</View>
+
+					{ props.time ? (
+						<View style={styles.eventTimeContainer}>
+							<Text style={{fontSize: 14, color: '#fff'}}>{props.time}</Text>
+						</View>
+					) : null }
 				</View>
 				
 				<View style={styles.imageContainer}>
-					<CoverImage source={require('../../assets/tanam_pohon.jpg')} />
+					{props.image ? <CoverImage source={props.image} /> : null}
 				</View>
 			</View>
 		</TouchableHighlight>
@@ -30,10 +35,13 @@ const styles = StyleSheet.create({
 		backgroundColor: '#fff', elevation: 2
 	},
 	eventDetail: {
-		flex: 1, flexDirection: 'row', alignItems: 'center', padding: 8
+		flex: 1, flexDirection: 'row', alignItems: 'center'
 	},
 	eventIcon: {
-		color: '#FF7043', fontSize: 24, marginLeft: 4
+		color: '#FF7043', fontSize: 24, marginLeft: 8, marginVertical: 8
+	},
+	eventTimeContainer: {
+		paddingHorizontal: 16, alignSelf: 'stretch', justifyContent: 'center', backgroundColor: '#78909C'
 	},
 	imageContainer: {
 		flex: 1, height: 180, backgroundColor: '#eee'

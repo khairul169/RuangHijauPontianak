@@ -70,10 +70,16 @@ const HighlightedFeeds = (props) => {
 }
 
 const UpcomingEvent = (props) => {
+	const { kegiatan } = props;
+
 	const viewEvent = () => {
 		props.navigation.navigate('ViewEvent', {
-			index: props.eventId
+			index: kegiatan.id
 		});
+	}
+
+	if (!kegiatan) {
+		return null;
 	}
 
 	return (
@@ -81,7 +87,11 @@ const UpcomingEvent = (props) => {
 			<Text style={styles.headerTitle}>Kegiatan Akan Datang</Text>
 			
 			<View style={styles.eventCard}>
-				<EventCard style={{marginTop: 8}} onPress={viewEvent} />
+				<EventCard style={{marginTop: 8}}
+					image={{uri: kegiatan.image}}
+					title={kegiatan.name}
+					time={kegiatan.time}
+					onPress={viewEvent} />
 			</View>
 		</View>
 	)

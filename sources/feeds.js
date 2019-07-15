@@ -43,7 +43,9 @@ class Feeds extends Component {
 	}
 
 	scrollToTop = () => {
-		this._feedList.scrollToOffset({offset: 0});
+		if (this.flatList) {
+			this.flatList.scrollToOffset({offset: 0});
+		}
 	}
 	
 	render() {
@@ -62,7 +64,7 @@ class Feeds extends Component {
 					} />
 
 				<View style={styles.content}>
-					<FlatList ref={ref => this._feedList = ref} style={{flex: 1}} data={this.props.feeds.posts}
+					<FlatList ref={ref => this.flatList = ref} style={{flex: 1}} data={this.props.feeds.posts}
 						keyExtractor={(item, index) => index.toString()}
 						renderItem={this.renderPhotoItem}
 						refreshing={this.props.feeds.isLoading}
