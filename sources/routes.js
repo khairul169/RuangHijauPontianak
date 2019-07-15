@@ -9,6 +9,7 @@ YellowBox.ignoreWarnings(['ViewPagerAndroid']);
 
 // Main screens
 import Auth from './auth'
+import Register from './register'
 import Home from './home'
 import Events from './events'
 import Feeds from './feeds'
@@ -38,6 +39,7 @@ const indexTabNavigator = createMaterialTopTabNavigator({
 
 const stackContainer = createStackNavigator({
 	Auth,
+	Register,
 	Index: indexTabNavigator,
 	ViewPhoto,
 	UploadPhoto,

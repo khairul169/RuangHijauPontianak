@@ -14,7 +14,7 @@ export const clearState = () => {
 	}
 }
 
-export const fetchLogin = (username, password) => {
+export const fetchLogin = ({username, password}) => {
 	return async (dispatch) => {
 		dispatch(setState({isLoading: true}));
 
@@ -30,20 +30,32 @@ export const fetchLogin = (username, password) => {
 				loggedIn: true,
 				sessionId: response.sessionId
 			}));
-		} else {
-			dispatch(setState({
-				loggedIn: false,
-				sessionId: null
-			}));
 		}
 
 		dispatch(setState({isLoading: false}));
 	}
 }
 
-export const fetchRegister = (username, password) => {
-	return (dispatch) => {
-		//
+export const fetchRegister = ({fullName, username, password}) => {
+	return async (dispatch) => {
+		dispatch(setState({isLoading: true}));
+
+		let response = await API.post(null, 'auth', 'register', {
+			fullName,
+			username,
+			password
+		});
+		
+		if (response && response.status === 0 && response.sessionId !== null) {
+			await DataStorage.storeData(DataStorage.sessionId, response.sessionId);
+
+			dispatch(setState({
+				loggedIn: true,
+				sessionId: response.sessionId
+			}));
+		}
+
+		dispatch(setState({isLoading: false}));
 	}
 }
 

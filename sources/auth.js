@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
-import { fetchLogin, fetchRegister, validateSession } from './actions/auth'
+import { fetchLogin, validateSession } from './actions/auth'
 import { StyleSheet, View, TextInput, StatusBar, TouchableOpacity, Text } from 'react-native'
 
-const UserInput = (props) => {
+export const UserInput = (props) => {
 	return (
 		<View style={styles.userInput}>
 			<TextInput {...props} autoCompleteType='off' textContentType={props.password ? 'password' : 'username'}
@@ -13,7 +13,7 @@ const UserInput = (props) => {
 	)
 }
 
-const SubmitButton = (props) => {
+export const SubmitButton = (props) => {
 	return (
 		<TouchableOpacity style={[styles.submitButton, props.style]} onPress={props.onPress}>
 			<Text style={{fontSize: 16, textAlign: 'center', color: '#fff'}}>{props.title}</Text>
@@ -22,7 +22,6 @@ const SubmitButton = (props) => {
 }
 
 const Auth = (props) => {
-
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 
@@ -31,7 +30,9 @@ const Auth = (props) => {
 			return;
 		}
 
-		props.fetchLogin(username, password);
+		props.fetchLogin({
+			username, password
+		});
 	}
 
 	const { auth, navigation } = props;
@@ -56,13 +57,16 @@ const Auth = (props) => {
 			</View>
 
 			<View style={{padding: 16}}>
-				<UserInput placeholder='Username' value={username} onChangeText={setUsername} />
-				<UserInput placeholder='Password' value={password} onChangeText={setPassword} password />
+				<UserInput placeholder='Nama Pengguna' value={username} onChangeText={setUsername} />
+				<UserInput placeholder='Kata Sandi' value={password} onChangeText={setPassword} password />
 
-				<Text style={{textAlign: 'center', fontSize: 14, color: '#727272'}}>Daftar Baru</Text>
+				<SubmitButton title='MASUK' onPress={login} />
+
+				<TouchableOpacity style={{padding: 16, marginTop: 16}}
+					onPress={() => props.navigation.navigate('Register')}>
+					<Text style={{textAlign: 'center', fontSize: 14, color: '#727272'}}>Daftar Baru</Text>
+				</TouchableOpacity>
 			</View>
-
-			<SubmitButton title='MASUK' onPress={login} />
 		</View>
 	)
 }
@@ -85,7 +89,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
 	fetchLogin,
-	fetchRegister,
 	validateSession
 }
 
