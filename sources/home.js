@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { fetchHome } from './actions/home'
 
-import { Text, StyleSheet, View, ScrollView, FlatList, Dimensions } from 'react-native'
+import { Text, StyleSheet, View, ScrollView, FlatList, Dimensions, RefreshControl } from 'react-native'
 import { Header, PosterLayout, EventCard, TouchableImage } from './components'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
@@ -90,6 +90,10 @@ const UpcomingEvent = (props) => {
 
 class Home extends Component {
 	componentDidMount() {
+		this.refresh();
+	}
+
+	refresh = () => {
 		this.props.fetchHome();
 	}
 
@@ -104,7 +108,9 @@ class Home extends Component {
 						<MaterialIcons name='notifications' style={{color: '#686868'}} size={18} />
 					}*/ />
 
-				<ScrollView style={styles.content}>
+				<ScrollView style={styles.content} refreshControl={
+					<RefreshControl refreshing={this.props.isLoading} onRefresh={this.refresh} />
+				}>
 					<StatsPenghijauan {...this.props} />
 					<HighlightedFeeds {...this.props} />
 					<UpcomingEvent {...this.props} />

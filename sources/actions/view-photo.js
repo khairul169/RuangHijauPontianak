@@ -1,16 +1,24 @@
 import API from './api'
 
-export const setIsLoading = (loading) => {
+const setIsLoading = (loading) => {
 	return {
 		type: 'VIEWPHOTO_SET_LOADING',
 		loading
 	}
 }
 
-export const setPostData = (data) => {
+const setPostData = (data) => {
 	return {
 		type: 'VIEWPHOTO_SET_POSTDATA',
 		data
+	}
+}
+
+const setLikes = (likes, liked) => {
+	return {
+		type: 'VIEWPHOTO_SET_LIKES',
+		likes,
+		liked
 	}
 }
 
@@ -31,5 +39,19 @@ export const fetchData = (id) => {
 		
 		// set loading state
 		dispatch(setIsLoading(false));
+	}
+}
+
+export const likePost = (id) => {
+	return async (dispatch, getState) => {
+		let response = await API.get(getState().auth, 'post', 'like', {id});
+		
+		if (response && response.status === 0) {
+			// refresh post
+			dispatch(setLikes(
+				response.likes,
+				response.liked
+			));
+		}
 	}
 }

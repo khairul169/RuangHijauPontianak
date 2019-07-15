@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchData } from '../actions/view-photo'
+import { fetchData, likePost } from '../actions/view-photo'
 
 import { Text, StyleSheet, View, Dimensions, ScrollView, TouchableHighlight, TextInput } from 'react-native'
 import { Header, PosterLayout, HeaderButton, Image, LoadingLayout } from '../components'
@@ -26,8 +26,8 @@ const ActionButton = (props) => {
 
 class ViewPhoto extends Component {
 	componentDidMount() {
-		const postIndex = this.props.navigation.getParam('index', null);
-		this.props.fetchData(postIndex);
+		this.postId = this.props.navigation.getParam('index', null);
+		this.props.fetchData(this.postId);
 	}
 
 	render() {
@@ -57,7 +57,7 @@ class ViewPhoto extends Component {
 					<View style={{padding: 16}}>
 						<PosterLayout
 							title={post ? post.name : null}
-							subtitle={post ? `${post.location} • ${post.date}` : null} />
+							subtitle={post ? (post.location ? `${post.location} • ${post.date}` : post.date) : null} />
 						<Text style={styles.postDescription}>
 							{post ? post.desc : null}
 						</Text>
@@ -77,7 +77,7 @@ class ViewPhoto extends Component {
 						<ActionButton icon='heart'
 							label={post ? post.likes.toString() : null}
 							iconColor={post && post.liked ? '#ef5350' : null}
-							onPress={() => alert('test')} />
+							onPress={() => this.props.likePost(this.postId)} />
 						
 						{/*<ActionButton icon='share' leftBorder onPress={() => alert('test')}  />*/}
 					</View>
@@ -102,7 +102,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-	fetchData
+	fetchData,
+	likePost
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ViewPhoto)
