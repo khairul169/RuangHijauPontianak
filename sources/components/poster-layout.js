@@ -14,7 +14,7 @@ const PosterLayout = (props) => {
 
 			<View style={{flex: 1, marginLeft: 16}}>
 				<Text style={styles.title}>{props.title}</Text>
-				<Text style={styles.subtitle}>{props.subtitle}</Text>
+				{props.subtitle ? <Text style={styles.subtitle}>{props.subtitle}</Text> : null }
 			</View>
 		</View>
 	)

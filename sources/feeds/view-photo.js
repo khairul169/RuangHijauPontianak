@@ -49,9 +49,12 @@ class ViewPhoto extends Component {
 				
 				<ScrollView style={{flex: 1}}>
 					{ post && (
-						<Image
-							source={{uri: post.image}}
-							width={Dimensions.get('window').width} />
+						<View style={{backgroundColor: '#eee', alignItems: 'center'}}>
+							<Image
+								source={{uri: post.image}}
+								width={Dimensions.get('window').width}
+								height={350} />
+						</View>
 					) }
 					
 					<View style={{padding: 16}}>

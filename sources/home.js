@@ -50,8 +50,7 @@ const HighlightedFeeds = (props) => {
 			
 			<View style={{paddingHorizontal: 8, paddingVertical: 4, flexDirection: 'row'}}>
 				<PosterLayout photoSize={28}
-					title={item.name}
-					subtitle={item.username} />
+					title={item.name} />
 			</View>
 		</View>
 	)
