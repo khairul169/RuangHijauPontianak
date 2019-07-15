@@ -1,4 +1,4 @@
-package com.ruanghijaupontianak;
+package id.my.khairul.ruanghijaupontianak;
 
 import com.facebook.react.ReactActivity;
 
