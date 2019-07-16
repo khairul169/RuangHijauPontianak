@@ -84,12 +84,12 @@ const ProfileLayout = (props) => {
 					<View style={{flexDirection: 'row', alignItems: 'center'}}>
 						<MaterialCommunityIcons name='leaf' style={{color: '#333'}} size={14} />
 						<Text style={{marginLeft: 10, fontSize: 14}}>
-							{post_count ? post_count : null}
+							{post_count ? post_count : 0}
 						</Text>
 
 						<MaterialCommunityIcons name='heart' style={{color: '#333', marginLeft: 20}} size={14} />
 						<Text style={{marginLeft: 10, fontSize: 14}}>
-							{likes ? likes : null}
+							{likes ? likes : 0}
 						</Text>
 					</View>
 				</View>
