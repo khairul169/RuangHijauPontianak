@@ -1,5 +1,5 @@
 
-const DEBUG_RESULT = true;
+const DEBUG_RESULT = false;
 const API_URL = 'http://khairul.my.id/ruanghijaupnk/api/';
 //const API_URL = 'http://192.168.43.48/rhp/api/';
 //const API_URL = 'http://192.168.137.1/rhp/api/';
