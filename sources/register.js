@@ -20,7 +20,7 @@ const Register = (props) => {
 
 	// auth props updated
 	useEffect(() => {
-		if (props.auth.loggedIn) {
+		if (props.auth.loaded && props.auth.sessionId) {
 			props.navigation.replace('Index');
 		}
 	}, [props.auth]);
