@@ -102,6 +102,12 @@ class Home extends Component {
 		this.refresh();
 	}
 
+	componentDidUpdate(prevProps) {
+		if (this.props.feeds !== prevProps.feeds) {
+			this.refresh();
+		}
+	}
+
 	refresh = () => {
 		this.props.fetchHome();
 	}
@@ -144,7 +150,8 @@ const mapStateToProps = (state) => ({
 	isLoading: state.home.isLoading,
 	penghijauan: state.home.penghijauan,
 	unggahan: state.home.unggahan,
-	kegiatan: state.home.kegiatan
+	kegiatan: state.home.kegiatan,
+	feeds: state.feeds
 })
 
 const mapDispatchToProps = {

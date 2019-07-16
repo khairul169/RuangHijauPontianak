@@ -61,6 +61,10 @@ const ProfileLayout = (props) => {
 		refresh();
 	}, []);
 
+	useEffect(() => {
+		refresh();
+	}, [props.feeds]);
+
 	return (
 		<ScrollView style={styles.container}
 			refreshControl={
@@ -114,7 +118,8 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = (state) => ({
-	auth: state.auth
+	auth: state.auth,
+	feeds: state.feeds
 })
 
 export default connect(mapStateToProps)(ProfileLayout)
