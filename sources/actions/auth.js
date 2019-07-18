@@ -42,6 +42,8 @@ export const fetchLogin = ({username, password}) => {
 			// set session
 			dispatch(setSessionId(response.sessionId));
 		} else {
+			response.message && alert(response.message);
+
 			dispatch(setLoaded());
 		}
 	}
@@ -64,6 +66,8 @@ export const fetchRegister = ({fullName, username, password}) => {
 			// set state
 			dispatch(setSessionId(response.sessionId));
 		} else {
+			response.message && alert(response.message);
+
 			dispatch(setLoaded());
 		}
 	}
