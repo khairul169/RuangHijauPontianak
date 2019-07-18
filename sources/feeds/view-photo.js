@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import API from '../actions/api'
-import { Text, StyleSheet, View, Dimensions, ScrollView, TouchableHighlight, TextInput } from 'react-native'
-import { Header, PosterLayout, HeaderButton, Image, LoadingLayout } from '../components'
+import { Text, StyleSheet, View, Dimensions, ScrollView, TouchableHighlight,
+	TextInput, RefreshControl } from 'react-native'
+import { Header, PosterLayout, HeaderButton, Image, LoadingLayout, Comment } from '../components'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 const ActionButton = (props) => {
@@ -26,17 +27,29 @@ const ActionButton = (props) => {
 class ViewPhoto extends Component {
 	state = {
 		isLoading: false,
-		post: null
+		post: null,
+		comment: '',
+		comments: null
 	}
 
-	postId = null;
+	componentDidMount() {
+		this.postId = this.props.navigation.getParam('index', null);
+		this.refresh();
+	}
 
-	fetchData = async () => {
+	refresh = () => {
+		if (this.postId) {
+			this.fetchData(this.postId);
+			this.fetchComments();
+		}
+	}
+
+	fetchData = async (id) => {
 		// set loading
 		this.setState({ isLoading: true });
 
 		// fetch data
-		const result = await API.get(this.props.auth, 'post', 'get_post', {id: this.postId});
+		const result = await API.get(this.props.auth, 'post', 'get', {id});
 		
 		if (result && result.status === 0) {
 			// set post data
@@ -58,7 +71,7 @@ class ViewPhoto extends Component {
 		}
 
 		// fetch data
-		const result = await API.get(this.props.auth, 'post', 'like', {id: this.postId});
+		const result = await API.get(this.props.auth, 'post', 'like', {id: this.state.post.id});
 		
 		if (result && result.status === 0) {
 			// set post data
@@ -72,9 +85,38 @@ class ViewPhoto extends Component {
 		}
 	}
 
-	componentDidMount() {
-		this.postId = this.props.navigation.getParam('index', null);
-		this.fetchData();
+	fetchComments = async () => {
+		if (!this.postId) {
+			return;
+		}
+
+		// fetch data
+		const result = await API.get(this.props.auth, 'comments', 'get', {
+			post: this.postId
+		});
+		
+		if (result && result.status === 0) {
+			this.setState({comments: result.comments});
+		}
+	}
+
+	addComment = async () => {
+		const { post, comment } = this.state;
+
+		if (!post || !comment || comment === '') {
+			return;
+		}
+
+		// fetch data
+		const result = await API.post(this.props.auth, 'comments', 'add', {
+			post: post.id,
+			comment
+		});
+		
+		if (result && result.status === 0) {
+			this.setState({comment: ''});
+			this.fetchComments();
+		}
 	}
 
 	viewUserProfile = () => {
@@ -88,11 +130,7 @@ class ViewPhoto extends Component {
 	}
 
 	render() {
-		if (this.props.isLoading) {
-			return <LoadingLayout />
-		}
-
-		const { post } = this.state;
+		const { isLoading, post, comments } = this.state;
 		const window = Dimensions.get('window');
 
 		return (
@@ -105,7 +143,8 @@ class ViewPhoto extends Component {
 						} />
 					} />
 				
-				<ScrollView style={{flex: 1}}>
+				<ScrollView style={{flex: 1}} refreshControl={<RefreshControl
+					onRefresh={this.refresh} refreshing={isLoading} />}>
 					<View style={{padding: 16}}>
 						<PosterLayout
 							title={post ? post.name : null}
@@ -128,23 +167,37 @@ class ViewPhoto extends Component {
 						</View>
 					) }
 
-					<View style={{flexDirection: 'row', alignItems: 'center', marginVertical: 16}}>
+					<View style={{flexDirection: 'row', alignItems: 'stretch', height: 50,
+						borderTopColor: '#eee', borderTopWidth: 1,
+						borderBottomColor: '#eee', borderBottomWidth: 1}}>
+						
+						<ActionButton icon='heart'
+							label={post ? post.likes.toString() : null}
+							iconColor={post && post.liked ? '#ef5350' : null}
+							onPress={this.likePost} />
+					</View>
+
+					<View style={{flexDirection: 'row', alignItems: 'center', marginTop: 16}}>
 						<TextInput placeholder="Berikan komentar.." style={{flex: 1, marginLeft: 16,
 							borderColor: '#eee', borderWidth: 1, borderRadius: 10,
-							paddingVertical: 4, paddingHorizontal: 16}} />
-						<ActionButton icon='comment-plus' noFlex style={{width: 60}} />
+							paddingVertical: 4, paddingHorizontal: 16}}
+							value={this.state.comment}
+							onChangeText={v => this.setState({comment: v})}
+							onSubmitEditing={this.addComment} />
+						
+						<ActionButton icon='comment-plus' noFlex style={{width: 60}}
+							onPress={this.addComment} />
+					</View>
+
+					<View style={{paddingHorizontal: 16, paddingBottom: 16}}>
+						{ comments && comments.map((item, index) => (
+							<Comment style={{marginTop: 16}}
+								name={item.name}
+								date={item.date}
+								value={item.comment} />
+						)) }
 					</View>
 				</ScrollView>
-
-				<View style={{flexDirection: 'row', alignItems: 'stretch', height: 50,
-					borderTopColor: '#eee', borderTopWidth: 1,
-					borderBottomColor: '#eee', borderBottomWidth: 1}}>
-					
-					<ActionButton icon='heart'
-						label={post ? post.likes.toString() : null}
-						iconColor={post && post.liked ? '#ef5350' : null}
-						onPress={this.likePost} />
-				</View>
 			</View>
 		)
 	}

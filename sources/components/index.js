@@ -6,6 +6,7 @@ import EventCard from './event-card'
 import PosterLayout from './poster-layout'
 import { Image, CoverImage, TouchableImage } from './images'
 import LoadingLayout from './loading-layout'
+import Comment from './comment'
 
 export {
 	Header,
@@ -18,5 +19,6 @@ export {
 	Image,
 	CoverImage,
 	TouchableImage,
-	LoadingLayout
+	LoadingLayout,
+	Comment
 }

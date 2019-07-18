@@ -1,23 +1,35 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { TouchableImage } from './images'
+import PropTypes from 'prop-types'
 
-const PosterLayout = (props) => {
-	const photoSize = props.photoSize ? props.photoSize : 32;
+const PosterLayout = ({photoSize, onPress, photoSource, title, subtitle}) => {
 	const imgStyle = { width: photoSize, height: photoSize, borderRadius: photoSize/2 };
 
 	return (
 		<View style={styles.container}>
-			<TouchableImage onPress={props.onPress}
+			<TouchableImage onPress={onPress}
 				style={[styles.img, imgStyle]}
-				source={props.photoSource} />
+				source={photoSource} />
 
 			<View style={{flex: 1, marginLeft: 16}}>
-				<Text onPress={props.onPress} style={styles.title}>{props.title}</Text>
-				{props.subtitle ? <Text style={styles.subtitle}>{props.subtitle}</Text> : null }
+				<Text onPress={onPress} style={styles.title}>{title}</Text>
+				{subtitle ? <Text style={styles.subtitle}>{subtitle}</Text> : null }
 			</View>
 		</View>
 	)
+}
+
+PosterLayout.propTypes = {
+	photoSize: PropTypes.number,
+	onPress: PropTypes.func,
+	photoSource: PropTypes.object,
+	title: PropTypes.string,
+	subtitle: PropTypes.string
+}
+
+PosterLayout.defaultProps = {
+	photoSize: 32
 }
 
 const styles = StyleSheet.create({
