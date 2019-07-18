@@ -106,6 +106,10 @@ const ProfileLayout = (props) => {
 						source={{uri: item.image}}
 						onPress={() => viewPhoto(item.id)} />
 				)) }
+
+				{ !posts || !posts.length && (
+					<Text style={{flex: 1, marginTop: 14, textAlign: 'center', fontSize: 16, color: '#333'}}>Tidak ada postingan.</Text>
+				) }
 			</View>
 		</ScrollView>
 	)
